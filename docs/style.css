@@ -1,10 +1,9 @@
 /* =========================
    GoalGuard — style.css
-   ✅ Single scroll container (main.gg-snap)
-   ✅ Snap sections are full-screen (minus nav)
-   ✅ No double scrollbars / no right-side blank
-   ✅ Goals slide scrolls internally
-   ✅ Final CTA button stays compact
+   ✅ Fix: centered content (no right empty area)
+   ✅ Fix: snap is the ONLY scroll container
+   ✅ Goals internal scroll
+   ✅ Final CTA compact button
    ========================= */
 
 :root{
@@ -22,10 +21,16 @@ html, body{
   width: 100%;
   height: 100%;
   margin: 0;
-  overflow: hidden; /* ✅ body never scrolls */
+  overflow: hidden; /* body never scrolls */
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   background: linear-gradient(180deg, var(--bg1), var(--bg2));
   color: var(--textLight);
+}
+
+/* ✅ Common centered wrapper */
+.gg-container{
+  width: min(1220px, 100%);
+  margin: 0 auto;
 }
 
 /* =========================
@@ -107,7 +112,6 @@ html, body{
 
 .gg-btn-solid{
   background:#22c55e;
-  border:1px solid rgba(0,0,0,0);
   color:#0b1220;
 }
 .gg-btn-solid:hover{ filter:brightness(1.05); }
@@ -118,7 +122,7 @@ html, body{
 }
 
 /* =========================
-   SNAP SCROLL CONTAINER (✅ the fix)
+   SNAP SCROLL CONTAINER
    ========================= */
 .gg-snap{
   position: fixed;
@@ -135,26 +139,25 @@ html, body{
   -webkit-overflow-scrolling: touch;
 }
 
-/* each slide is exactly one viewport (minus nav) */
+/* Each slide fills screen minus nav */
 .gg-snap-section{
   height: calc(100vh - var(--navH));
   scroll-snap-align: start;
   scroll-snap-stop: always;
 
   display:flex;
-  flex-direction:column;
-  justify-content:center;
   align-items:center;
+  justify-content:center;
 
   padding: 24px 16px;
   overflow: hidden; /* prevents peeking */
 }
 
-/* slides that need internal scroll */
+/* Slides that need internal scroll */
 .gg-snap-section.is-scroll{
   overflow-y: auto;
-  justify-content: flex-start;
-  align-items: stretch;
+  align-items: flex-start;
+  justify-content: center;
 }
 
 /* =========================
@@ -162,9 +165,6 @@ html, body{
    ========================= */
 .gg-hero-clean{
   text-align:center;
-  width: 100%;
-  max-width: 1220px;
-  margin: 0 auto;
 }
 
 .gg-pill{
@@ -172,7 +172,6 @@ html, body{
   align-items:center;
   justify-content:center;
   gap: 8px;
-  color: rgba(255,255,255,0.92);
   font-weight: 900;
   font-size: 13px;
   padding: 8px 14px;
@@ -181,6 +180,7 @@ html, body{
   border: 1px solid rgba(255,255,255,0.18);
   width: fit-content;
   margin: 0 auto 18px;
+  color: rgba(255,255,255,0.92);
 }
 
 .gg-title{
@@ -228,7 +228,6 @@ html, body{
    ========================= */
 .gg-section{
   width: 100%;
-  max-width: 1220px;
   border-radius: 20px;
   border: 1px solid rgba(255,255,255,0.06);
   background: rgba(18,22,34,0.45);
@@ -237,12 +236,6 @@ html, body{
 
 .gg-steps{
   padding: 28px 22px;
-}
-
-.gg-steps-head{
-  width: 100%;
-  max-width: 1100px;
-  margin: 0 auto;
 }
 
 .gg-steps-head h2{
@@ -366,17 +359,13 @@ html, body{
 }
 
 /* =========================
-   FEATURES (layout only; keep your mini-graphs CSS if you want)
+   FEATURES (keep your mini graphs if you want)
    ========================= */
-.gg-features{
-  width: 100%;
-  max-width: 1220px;
-}
+.gg-features{ width: 100%; }
 
 .gg-features-head{
-  width: 100%;
   max-width: 820px;
-  margin: 0 auto 28px auto;
+  margin: 0 0 28px 0;
 }
 
 .gg-features-title{
@@ -465,17 +454,9 @@ html, body{
 }
 
 /* =========================
-   GOALS (internal scroll)
+   GOALS
    ========================= */
-.gg-goals{
-  width: 100%;
-  max-width: 1220px;
-}
-
-.gg-goals-head{
-  max-width: 1100px;
-  margin: 0 auto 20px;
-}
+.gg-goals{ width: 100%; }
 
 .gg-goals-title{
   margin: 0;
@@ -546,38 +527,6 @@ html, body{
   color: inherit;
 }
 
-.gg-rail-item.is-active{
-  background: linear-gradient(135deg, rgba(255,91,4,0.18), rgba(255,91,4,0.06));
-  border-color: rgba(255,91,4,0.35);
-}
-
-.gg-rail-main{ display:flex; flex-direction:column; gap:6px; }
-.gg-rail-name{ color: var(--sand); font-weight:950; }
-.gg-rail-meta{ color: rgba(228,238,240,0.55); font-weight:700; font-size:13px; }
-
-.gg-rail-check{
-  width: 28px;
-  height: 28px;
-  border-radius: 999px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  border: 1px solid rgba(255,255,255,0.14);
-  background: rgba(255,255,255,0.05);
-}
-
-.gg-rail-add{
-  width: 100%;
-  margin-top: 6px;
-  padding: 14px;
-  border-radius: 18px;
-  border: 1px dashed rgba(255,255,255,0.18);
-  background: rgba(255,255,255,0.02);
-  color: rgba(228,238,240,0.75);
-  font-weight: 850;
-  cursor: pointer;
-}
-
 .gg-panel{
   border-radius: 18px;
   border: 1px solid rgba(255,255,255,0.06);
@@ -586,53 +535,11 @@ html, body{
   min-height: 420px;
 }
 
-.gg-panel-top{
-  display:flex;
-  justify-content: space-between;
-  gap: 14px;
-  margin-bottom: 14px;
-}
-
-.gg-panel-title{ margin:0; color: var(--sand); font-size: 28px; font-weight:950; }
-.gg-panel-sub{ margin:10px 0 0; color: var(--muted); font-size:14.5px; }
-
-.gg-panel-badge{
-  font-weight: 950;
-  font-size: 12px;
-  padding: 8px 10px;
-  border-radius: 999px;
-  border: 1px solid rgba(255,255,255,0.14);
-  background: rgba(255,255,255,0.05);
-  color: rgba(228,238,240,0.85);
-}
-
 .gg-common-grid{
   display:grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 14px;
 }
-
-.gg-common-card{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  padding: 16px;
-  border-radius: 18px;
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.10);
-}
-
-.gg-common-icon{
-  width: 40px;
-  height: 40px;
-  border-radius: 14px;
-  display:grid;
-  place-items:center;
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.10);
-}
-
-.gg-common-text{ font-weight: 850; color: rgba(228,238,240,0.82); }
 
 @media (max-width: 1060px){
   .gg-goals-shell{ grid-template-columns: 1fr; }
@@ -644,10 +551,7 @@ html, body{
    FINAL CTA (compact button)
    ========================= */
 .gg-final{
-  width: 100%;
-  max-width: 1220px;
   text-align:center;
-  align-items: center;
 }
 
 .gg-final-title{
@@ -667,12 +571,11 @@ html, body{
 
 .gg-final-btn{
   display: inline-flex !important;
+  width: fit-content !important;
+  max-width: none !important;
   align-items: center;
   justify-content: center;
   gap: 12px;
-
-  width: fit-content !important;
-  max-width: none !important;
 
   background: var(--orange);
   color: #fff;
