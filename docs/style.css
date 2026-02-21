@@ -1,36 +1,36 @@
 /* =========================
    GoalGuard — style.css
-   ✅ Fix: centered content (no right empty area)
-   ✅ Fix: snap is the ONLY scroll container
-   ✅ Goals internal scroll
-   ✅ Final CTA compact button
+   + One-screen snap sections (no peeking)
    ========================= */
 
 :root{
+  --mirage:#16232A;
   --orange:#FF5B04;
+  --sea:#075056;
   --sand:#E4EEF0;
+
   --bg1:#16232A;
   --bg2:#0F1A20;
+
   --textLight:#EAF4F7;
   --muted:rgba(234,244,247,0.65);
+
   --navH: 76px;
 }
 
-/* Base */
+/* Prevent right-side gap */
 html, body{
   width: 100%;
   height: 100%;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+body{
   margin: 0;
-  overflow: hidden; /* body never scrolls */
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   background: linear-gradient(180deg, var(--bg1), var(--bg2));
   color: var(--textLight);
-}
-
-/* ✅ Common centered wrapper */
-.gg-container{
-  width: min(1220px, 100%);
-  margin: 0 auto;
 }
 
 /* =========================
@@ -89,6 +89,7 @@ html, body{
   gap:12px;
 }
 
+/* Nav buttons */
 .gg-btn{
   display:inline-flex;
   align-items:center;
@@ -98,8 +99,8 @@ html, body{
   border-radius:10px;
   font-weight:700;
   font-size:14px;
+  border:none;
   cursor:pointer;
-  border: none;
   transition:all .18s ease;
 }
 
@@ -112,6 +113,7 @@ html, body{
 
 .gg-btn-solid{
   background:#22c55e;
+  border:1px solid rgba(0,0,0,0);
   color:#0b1220;
 }
 .gg-btn-solid:hover{ filter:brightness(1.05); }
@@ -122,69 +124,70 @@ html, body{
 }
 
 /* =========================
-   SNAP SCROLL CONTAINER
+   ONE SCREEN SNAP (THE FIX)
    ========================= */
-.gg-snap{
-  position: fixed;
-  top: var(--navH);
-  left: 0;
-  right: 0;
-  bottom: 0;
 
-  overflow-y: auto;
-  overflow-x: hidden;
-
-  scroll-snap-type: y mandatory;
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
+/* keep everything below fixed nav */
+.gg-shell{
+  max-width: 1220px;
+  margin: 0 auto;
+  padding-top: var(--navH);
 }
 
-/* Each slide fills screen minus nav */
+/* snap container */
+.gg-snap{
+  scroll-snap-type: y mandatory;
+}
+
+/* each slide is EXACTLY one screen (minus nav) */
 .gg-snap-section{
   height: calc(100vh - var(--navH));
   scroll-snap-align: start;
   scroll-snap-stop: always;
 
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  padding: 24px 16px;
   overflow: hidden; /* prevents peeking */
+
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  padding: 24px 16px;
 }
 
-/* Slides that need internal scroll */
+/* sections that need more content can scroll internally */
 .gg-snap-section.is-scroll{
   overflow-y: auto;
-  align-items: flex-start;
-  justify-content: center;
+  justify-content: flex-start;
+}
+
+/* optional internal scrollbar styling */
+.gg-snap-section.is-scroll::-webkit-scrollbar{
+  width: 8px;
+}
+.gg-snap-section.is-scroll::-webkit-scrollbar-thumb{
+  background: rgba(255,255,255,0.12);
+  border-radius: 10px;
 }
 
 /* =========================
    HERO
    ========================= */
-.gg-hero-clean{
-  text-align:center;
-}
+.gg-hero-clean{ text-align:center; }
 
 .gg-pill{
   display:inline-flex;
   align-items:center;
-  justify-content:center;
   gap: 8px;
+  color: rgba(255,255,255,0.92);
   font-weight: 900;
   font-size: 13px;
   padding: 8px 14px;
   border-radius: 999px;
   background: rgba(255,255,255,0.06);
   border: 1px solid rgba(255,255,255,0.18);
-  width: fit-content;
-  margin: 0 auto 18px;
-  color: rgba(255,255,255,0.92);
 }
 
 .gg-title{
-  margin: 0;
+  margin: 22px 0 0;
   font-size: 58px;
   font-weight: 950;
   letter-spacing: 0.5px;
@@ -227,7 +230,6 @@ html, body{
    HOW / STEPS
    ========================= */
 .gg-section{
-  width: 100%;
   border-radius: 20px;
   border: 1px solid rgba(255,255,255,0.06);
   background: rgba(18,22,34,0.45);
@@ -269,6 +271,7 @@ html, body{
   box-shadow: 0 24px 70px rgba(0,0,0,0.35);
   transition: transform 220ms ease, box-shadow 220ms ease;
 }
+
 .gg-step-card:hover{ transform: translateY(-6px); }
 
 .gg-step-accent{
@@ -359,10 +362,21 @@ html, body{
 }
 
 /* =========================
-   FEATURES (keep your mini graphs if you want)
+   Reveal animation
    ========================= */
-.gg-features{ width: 100%; }
+.gg-reveal{
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 650ms ease, transform 650ms ease;
+}
+.gg-reveal.is-visible{
+  opacity: 1;
+  transform: translateY(0);
+}
 
+/* =========================
+   FEATURES
+   ========================= */
 .gg-features-head{
   max-width: 820px;
   margin: 0 0 28px 0;
@@ -386,16 +400,15 @@ html, body{
 }
 
 .gg-features-grid{
-  width: 100%;
   display:grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 22px;
   margin-top: 34px;
 }
 
-.gg-green{  --accent: rgba(59,240,189,0.95); }
-.gg-purple{ --accent: rgba(160,120,255,0.95); }
-.gg-pink{   --accent: rgba(255,92,178,0.95); }
+.gg-green{  --accent: rgba(59,240,189,0.95); --accentSoft: rgba(59,240,189,0.14); }
+.gg-purple{ --accent: rgba(160,120,255,0.95); --accentSoft: rgba(160,120,255,0.14); }
+.gg-pink{   --accent: rgba(255,92,178,0.95); --accentSoft: rgba(255,92,178,0.14); }
 
 .gg-feature-card{
   border-radius: 26px;
@@ -453,10 +466,101 @@ html, body{
   border: 1px solid rgba(255,255,255,0.10);
 }
 
+.gg-mini-bars{
+  display:grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap:10px;
+  height:72px;
+  align-items:end;
+}
+.gg-mini-bars span{
+  display:block;
+  border-radius:10px;
+  background: linear-gradient(180deg, var(--accent), rgba(255,255,255,0.12));
+}
+.gg-mini-bars span:nth-child(1){ height:22px; }
+.gg-mini-bars span:nth-child(2){ height:40px; }
+.gg-mini-bars span:nth-child(3){ height:26px; }
+.gg-mini-bars span:nth-child(4){ height:52px; }
+.gg-mini-bars span:nth-child(5){ height:34px; }
+.gg-mini-bars span:nth-child(6){ height:60px; }
+.gg-mini-bars span:nth-child(7){ height:44px; }
+.gg-mini-bars span:nth-child(8){ height:66px; }
+
+.gg-mini-note{
+  margin-top: 12px;
+  font-weight: 900;
+  color: rgba(228,238,240,0.82);
+  font-size: 13px;
+}
+
+.gg-mini-ring{ display:flex; align-items:center; gap:16px; }
+
+.gg-ring{
+  width:78px; height:78px;
+  border-radius:999px;
+  display:grid;
+  place-items:center;
+  font-weight:950;
+  font-size:24px;
+  color: var(--sand);
+  border: 6px solid rgba(255,255,255,0.12);
+  position: relative;
+}
+.gg-ring:after{
+  content:"";
+  position:absolute;
+  inset:-6px;
+  border-radius:999px;
+  border: 6px solid var(--accent);
+  opacity:0.55;
+}
+
+.gg-mini-wave{
+  flex:1;
+  display:flex;
+  gap:7px;
+  justify-content:center;
+  align-items:center;
+}
+.gg-mini-wave span{
+  width:7px;
+  border-radius:10px;
+  background: linear-gradient(180deg, var(--accent), rgba(255,255,255,0.12));
+}
+.gg-mini-wave span:nth-child(1){height:16px;}
+.gg-mini-wave span:nth-child(2){height:28px;}
+.gg-mini-wave span:nth-child(3){height:38px;}
+.gg-mini-wave span:nth-child(4){height:48px;}
+.gg-mini-wave span:nth-child(5){height:48px;}
+.gg-mini-wave span:nth-child(6){height:38px;}
+.gg-mini-wave span:nth-child(7){height:28px;}
+.gg-mini-wave span:nth-child(8){height:18px;}
+
+.gg-chip-row{ display:flex; flex-wrap:wrap; gap:10px; }
+
+.gg-chip.accent{
+  color: rgba(255,255,255,0.92);
+  border-color: rgba(255,255,255,0.16);
+  background: rgba(255,255,255,0.06);
+}
+
+.gg-mini-big{ margin-top:16px; display:flex; gap:10px; align-items:baseline; }
+.gg-mini-num{ font-size:34px; font-weight:950; color: var(--accent); }
+.gg-mini-label{ color: rgba(228,238,240,0.65); font-weight:800; }
+
+@media (max-width: 980px){
+  .gg-features-title{ font-size: 40px; }
+  .gg-features-grid{ grid-template-columns: 1fr; }
+}
+
 /* =========================
    GOALS
    ========================= */
-.gg-goals{ width: 100%; }
+.gg-goals-head{
+  max-width: 1100px;
+  margin: 0 auto 20px;
+}
 
 .gg-goals-title{
   margin: 0;
@@ -527,6 +631,38 @@ html, body{
   color: inherit;
 }
 
+.gg-rail-item.is-active{
+  background: linear-gradient(135deg, rgba(255,91,4,0.18), rgba(255,91,4,0.06));
+  border-color: rgba(255,91,4,0.35);
+}
+
+.gg-rail-main{ display:flex; flex-direction:column; gap:6px; }
+.gg-rail-name{ color: var(--sand); font-weight:950; }
+.gg-rail-meta{ color: rgba(228,238,240,0.55); font-weight:700; font-size:13px; }
+
+.gg-rail-check{
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.05);
+}
+
+.gg-rail-add{
+  width: 100%;
+  margin-top: 6px;
+  padding: 14px;
+  border-radius: 18px;
+  border: 1px dashed rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.02);
+  color: rgba(228,238,240,0.75);
+  font-weight: 850;
+  cursor: pointer;
+}
+
 .gg-panel{
   border-radius: 18px;
   border: 1px solid rgba(255,255,255,0.06);
@@ -535,11 +671,53 @@ html, body{
   min-height: 420px;
 }
 
+.gg-panel-top{
+  display:flex;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.gg-panel-title{ margin:0; color: var(--sand); font-size: 28px; font-weight:950; }
+.gg-panel-sub{ margin:10px 0 0; color: var(--muted); font-size:14.5px; }
+
+.gg-panel-badge{
+  font-weight: 950;
+  font-size: 12px;
+  padding: 8px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.05);
+  color: rgba(228,238,240,0.85);
+}
+
 .gg-common-grid{
   display:grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 14px;
 }
+
+.gg-common-card{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding: 16px;
+  border-radius: 18px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.10);
+}
+
+.gg-common-icon{
+  width: 40px;
+  height: 40px;
+  border-radius: 14px;
+  display:grid;
+  place-items:center;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.10);
+}
+
+.gg-common-text{ font-weight: 850; color: rgba(228,238,240,0.82); }
 
 @media (max-width: 1060px){
   .gg-goals-shell{ grid-template-columns: 1fr; }
@@ -548,11 +726,9 @@ html, body{
 }
 
 /* =========================
-   FINAL CTA (compact button)
+   FINAL CTA
    ========================= */
-.gg-final{
-  text-align:center;
-}
+.gg-final{ text-align:center; }
 
 .gg-final-title{
   margin: 0;
@@ -570,26 +746,19 @@ html, body{
 }
 
 .gg-final-btn{
-  display: inline-flex !important;
-  width: fit-content !important;
-  max-width: none !important;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-
+  display:inline-flex;
+  align-items:center;
+  gap:12px;
   background: var(--orange);
-  color: #fff;
-  text-decoration: none;
-
-  padding: 16px 26px;
-  border-radius: 20px;
-
-  font-weight: 900;
-  font-size: 17px;
-
-  margin-top: 18px;
-  box-shadow: 0 16px 50px rgba(255,91,4,0.35);
+  color:white;
+  text-decoration:none;
+  padding:16px 26px;
+  border-radius:20px;
+  font-weight:900;
+  font-size:17px;
+  box-shadow:0 16px 50px rgba(255,91,4,0.35);
   transition: 0.25s ease;
+  margin-top: 18px;
 }
 
 .gg-final-btn:hover{
@@ -597,10 +766,7 @@ html, body{
   box-shadow:0 22px 60px rgba(255,91,4,0.45);
 }
 
-.gg-final-arrow{
-  font-size: 22px;
-  opacity: 0.95;
-}
+.gg-final-arrow{ font-size: 22px; opacity: 0.95; }
 
 .gg-final-note{
   margin-top: 16px;
