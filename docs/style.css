@@ -1,7 +1,10 @@
 /* =========================
    GoalGuard — style.css
-   ✅ FIX: Snap container is the scroll container
-   ✅ FIX: Final button never becomes full width
+   ✅ Single scroll container (main.gg-snap)
+   ✅ Snap sections are full-screen (minus nav)
+   ✅ No double scrollbars / no right-side blank
+   ✅ Goals slide scrolls internally
+   ✅ Final CTA button stays compact
    ========================= */
 
 :root{
@@ -14,12 +17,12 @@
   --navH: 76px;
 }
 
-/* Page base */
+/* Base */
 html, body{
   width: 100%;
   height: 100%;
   margin: 0;
-  overflow: hidden; /* ✅ body does NOT scroll; main.gg-snap does */
+  overflow: hidden; /* ✅ body never scrolls */
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   background: linear-gradient(180deg, var(--bg1), var(--bg2));
   color: var(--textLight);
@@ -91,6 +94,7 @@ html, body{
   font-weight:700;
   font-size:14px;
   cursor:pointer;
+  border: none;
   transition:all .18s ease;
 }
 
@@ -114,21 +118,26 @@ html, body{
 }
 
 /* =========================
-   SNAP SCROLL CONTAINER (THE FIX)
+   SNAP SCROLL CONTAINER (✅ the fix)
    ========================= */
 .gg-snap{
-  height: calc(100vh - var(--navH));
-  margin-top: var(--navH);
+  position: fixed;
+  top: var(--navH);
+  left: 0;
+  right: 0;
+  bottom: 0;
+
   overflow-y: auto;
   overflow-x: hidden;
+
   scroll-snap-type: y mandatory;
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
 }
 
-/* each slide fills the snap container */
+/* each slide is exactly one viewport (minus nav) */
 .gg-snap-section{
-  height: 100%;
+  height: calc(100vh - var(--navH));
   scroll-snap-align: start;
   scroll-snap-stop: always;
 
@@ -141,7 +150,7 @@ html, body{
   overflow: hidden; /* prevents peeking */
 }
 
-/* sections that need scrolling internally */
+/* slides that need internal scroll */
 .gg-snap-section.is-scroll{
   overflow-y: auto;
   justify-content: flex-start;
@@ -158,7 +167,6 @@ html, body{
   margin: 0 auto;
 }
 
-/* pill compact + placed nicely */
 .gg-pill{
   display:inline-flex;
   align-items:center;
@@ -171,7 +179,7 @@ html, body{
   border-radius: 999px;
   background: rgba(255,255,255,0.06);
   border: 1px solid rgba(255,255,255,0.18);
-  max-width: fit-content;
+  width: fit-content;
   margin: 0 auto 18px;
 }
 
@@ -268,7 +276,6 @@ html, body{
   box-shadow: 0 24px 70px rgba(0,0,0,0.35);
   transition: transform 220ms ease, box-shadow 220ms ease;
 }
-
 .gg-step-card:hover{ transform: translateY(-6px); }
 
 .gg-step-accent{
@@ -359,20 +366,7 @@ html, body{
 }
 
 /* =========================
-   Reveal
-   ========================= */
-.gg-reveal{
-  opacity: 0;
-  transform: translateY(18px);
-  transition: opacity 650ms ease, transform 650ms ease;
-}
-.gg-reveal.is-visible{
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* =========================
-   FEATURES
+   FEATURES (layout only; keep your mini-graphs CSS if you want)
    ========================= */
 .gg-features{
   width: 100%;
@@ -471,7 +465,7 @@ html, body{
 }
 
 /* =========================
-   GOALS
+   GOALS (internal scroll)
    ========================= */
 .gg-goals{
   width: 100%;
@@ -524,6 +518,11 @@ html, body{
   padding: 14px;
 }
 
+.gg-rail-v2{
+  background: rgba(0,0,0,0.26);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
 .gg-rail-label{
   font-size: 12px;
   letter-spacing: 1.2px;
@@ -547,6 +546,38 @@ html, body{
   color: inherit;
 }
 
+.gg-rail-item.is-active{
+  background: linear-gradient(135deg, rgba(255,91,4,0.18), rgba(255,91,4,0.06));
+  border-color: rgba(255,91,4,0.35);
+}
+
+.gg-rail-main{ display:flex; flex-direction:column; gap:6px; }
+.gg-rail-name{ color: var(--sand); font-weight:950; }
+.gg-rail-meta{ color: rgba(228,238,240,0.55); font-weight:700; font-size:13px; }
+
+.gg-rail-check{
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.05);
+}
+
+.gg-rail-add{
+  width: 100%;
+  margin-top: 6px;
+  padding: 14px;
+  border-radius: 18px;
+  border: 1px dashed rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.02);
+  color: rgba(228,238,240,0.75);
+  font-weight: 850;
+  cursor: pointer;
+}
+
 .gg-panel{
   border-radius: 18px;
   border: 1px solid rgba(255,255,255,0.06);
@@ -555,19 +586,68 @@ html, body{
   min-height: 420px;
 }
 
+.gg-panel-top{
+  display:flex;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.gg-panel-title{ margin:0; color: var(--sand); font-size: 28px; font-weight:950; }
+.gg-panel-sub{ margin:10px 0 0; color: var(--muted); font-size:14.5px; }
+
+.gg-panel-badge{
+  font-weight: 950;
+  font-size: 12px;
+  padding: 8px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.05);
+  color: rgba(228,238,240,0.85);
+}
+
 .gg-common-grid{
   display:grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 14px;
 }
 
+.gg-common-card{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding: 16px;
+  border-radius: 18px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.10);
+}
+
+.gg-common-icon{
+  width: 40px;
+  height: 40px;
+  border-radius: 14px;
+  display:grid;
+  place-items:center;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.10);
+}
+
+.gg-common-text{ font-weight: 850; color: rgba(228,238,240,0.82); }
+
+@media (max-width: 1060px){
+  .gg-goals-shell{ grid-template-columns: 1fr; }
+  .gg-common-grid{ grid-template-columns: 1fr; }
+  .gg-goals-title{ font-size: 40px; }
+}
+
 /* =========================
-   FINAL CTA (THE BUTTON FIX)
+   FINAL CTA (compact button)
    ========================= */
 .gg-final{
   width: 100%;
   max-width: 1220px;
   text-align:center;
+  align-items: center;
 }
 
 .gg-final-title{
@@ -585,14 +665,13 @@ html, body{
   line-height: 1.6;
 }
 
-/* ✅ force compact button ALWAYS */
 .gg-final-btn{
   display: inline-flex !important;
   align-items: center;
   justify-content: center;
   gap: 12px;
 
-  width: auto !important;
+  width: fit-content !important;
   max-width: none !important;
 
   background: var(--orange);
@@ -625,24 +704,4 @@ html, body{
   font-size: 13px;
   font-weight: 700;
   color: rgba(228,238,240,0.55);
-}
-/* ===== FINAL CTA OVERRIDE (must be at END of file) ===== */
-.gg-final.gg-snap-section{
-  align-items: center !important;   /* stop children stretching */
-}
-
-.gg-final-btn{
-  display: inline-flex !important;
-  width: fit-content !important;    /* never full width */
-  max-width: none !important;
-  align-self: center !important;    /* center inside flex column */
-  padding: 16px 26px !important;
-  border-radius: 20px !important;
-  white-space: nowrap !important;   /* keep it compact */
-}
-/* ===== HERO PILL OVERRIDE ===== */
-.gg-pill{
-  width: fit-content !important;
-  max-width: fit-content !important;
-  align-self: center !important;
 }
