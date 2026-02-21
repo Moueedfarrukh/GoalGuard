@@ -8,7 +8,7 @@
   <!-- Bootstrap CSS (optional) -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
 
-  <!-- ✅ CSS in same folder (docs/) -->
+  <!-- CSS (same folder /docs) -->
   <link rel="stylesheet" href="./style.css" />
 </head>
 
@@ -16,12 +16,14 @@
   <!-- NAV -->
   <nav class="gg-nav">
     <div class="gg-nav-inner">
-      <a class="gg-brand" href="#top">GoalGuard</a>
+      <a class="gg-brand" href="#top" onclick="document.querySelector('.gg-snap').scrollTo({top:0, behavior:'smooth'}); return false;">
+        GoalGuard
+      </a>
 
       <div class="gg-nav-links">
-        <a class="gg-link" href="#how">How it works</a>
-        <a class="gg-link" href="#features">Features</a>
-        <a class="gg-link" href="#goals">Goals</a>
+        <a class="gg-link" href="#how" onclick="document.getElementById('how').scrollIntoView({behavior:'smooth'}); return false;">How it works</a>
+        <a class="gg-link" href="#features" onclick="document.getElementById('features').scrollIntoView({behavior:'smooth'}); return false;">Features</a>
+        <a class="gg-link" href="#goals" onclick="document.getElementById('goals').scrollIntoView({behavior:'smooth'}); return false;">Goals</a>
       </div>
 
       <div class="gg-nav-actions">
@@ -35,8 +37,8 @@
     </div>
   </nav>
 
-  <!-- ✅ Snap container -->
-  <main id="top" class="gg-shell gg-snap">
+  <!-- ✅ Snap scroll container -->
+  <main id="top" class="gg-snap">
 
     <!-- HERO -->
     <section class="gg-hero-clean gg-snap-section">
@@ -179,7 +181,7 @@
       </div>
     </section>
 
-    <!-- GOALS (✅ internal scroll so it never spills into other slides) -->
+    <!-- GOALS (internal scroll) -->
     <section id="goals" class="gg-goals gg-snap-section is-scroll">
       <div class="gg-goals-head gg-reveal">
         <h2 class="gg-goals-title">Goals <span class="gg-dim">Explorer</span></h2>
@@ -250,7 +252,7 @@
         Get a finance coach that protects your goals and improves your decisions — in minutes.
       </p>
 
-      <a class="gg-final-btn" href="#top">
+      <a class="gg-final-btn" href="#top" onclick="document.querySelector('.gg-snap').scrollTo({top:0, behavior:'smooth'}); return false;">
         Start saving for free <span class="gg-final-arrow">→</span>
       </a>
 
