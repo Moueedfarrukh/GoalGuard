@@ -3,18 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-
   <title>GoalGuard</title>
 
-  <!-- Bootstrap CSS (optional, for navbar/components) -->
+  <!-- Bootstrap CSS (optional) -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
 
-  <!-- ✅ IMPORTANT: load CSS from the same docs folder -->
+  <!-- ✅ Load CSS locally from docs/ -->
   <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
-  <!-- NAV (GoalGuard style) -->
+  <!-- NAV -->
   <nav class="gg-nav">
     <div class="gg-nav-inner">
       <a class="gg-brand" href="#">GoalGuard</a>
@@ -50,9 +49,7 @@
         <div class="gg-cta">Start saving for free →</div>
       </div>
 
-      <div class="gg-note">
-        No card required • Free tool • Cancel anytime
-      </div>
+      <div class="gg-note">No card required • Free tool • Cancel anytime</div>
     </section>
 
     <!-- HOW IT WORKS -->
@@ -176,113 +173,73 @@
       </div>
     </section>
 
-    <!-- ✅ GOALS EXPLORER -->
-  <section class="gg-goals" id="goals">
-  <div class="gg-goals-head">
-    <h2 class="gg-goals-title">Goals <span class="gg-dim">Explorer</span></h2>
-    <p class="gg-goals-sub">
-      Left: goals you’ve selected. Right: common goals people usually pick.
-    </p>
-  </div>
-
-  <div class="gg-goals-shell gg-goals-shell-v2">
-    <!-- LEFT: Your goals -->
-    <aside class="gg-rail gg-rail-v2">
-      <div class="gg-rail-label">YOUR GOALS</div>
-
-      <button class="gg-rail-item gg-rail-item-v2 is-active" type="button">
-        <div class="gg-rail-main">
-          <div class="gg-rail-name">House Fund</div>
-          <div class="gg-rail-meta">Primary • Monthly</div>
-        </div>
-        <div class="gg-rail-check">✓</div>
-      </button>
-
-      <button class="gg-rail-item gg-rail-item-v2" type="button">
-        <div class="gg-rail-main">
-          <div class="gg-rail-name">Emergency Fund</div>
-          <div class="gg-rail-meta">Primary • Safety</div>
-        </div>
-        <div class="gg-rail-check">✓</div>
-      </button>
-
-      <button class="gg-rail-item gg-rail-item-v2" type="button">
-        <div class="gg-rail-main">
-          <div class="gg-rail-name">Trip</div>
-          <div class="gg-rail-meta">Secondary • Flexible</div>
-        </div>
-        <div class="gg-rail-check">✓</div>
-      </button>
-
-      <button class="gg-rail-add" type="button">
-        + Add a goal
-      </button>
-    </aside>
-
-    <!-- RIGHT: Common goals -->
-    <div class="gg-panel gg-panel-v2">
-      <div class="gg-panel-top gg-panel-top-v2">
-        <div>
-          <h3 class="gg-panel-title">Common goals</h3>
-          <p class="gg-panel-sub">
-            Popular choices — pick any to add later (static for now).
-          </p>
-        </div>
-
-        <div class="gg-panel-badge">SUGGESTED</div>
+    <!-- GOALS (V2) -->
+    <section class="gg-goals" id="goals">
+      <div class="gg-goals-head">
+        <h2 class="gg-goals-title">Goals <span class="gg-dim">Explorer</span></h2>
+        <p class="gg-goals-sub">
+          Left: goals you’ve selected. Right: common goals people usually pick.
+        </p>
       </div>
 
-      <div class="gg-common-grid">
-        <div class="gg-common-card">
-          <div class="gg-common-icon">🏠</div>
-          <div class="gg-common-text">Down payment</div>
-        </div>
+      <div class="gg-goals-shell gg-goals-shell-v2">
+        <!-- LEFT -->
+        <aside class="gg-rail gg-rail-v2">
+          <div class="gg-rail-label">YOUR GOALS</div>
 
-        <div class="gg-common-card">
-          <div class="gg-common-icon">🚗</div>
-          <div class="gg-common-text">Car fund</div>
-        </div>
+          <button class="gg-rail-item gg-rail-item-v2 is-active" type="button">
+            <div class="gg-rail-main">
+              <div class="gg-rail-name">House Fund</div>
+              <div class="gg-rail-meta">Primary • Monthly</div>
+            </div>
+            <div class="gg-rail-check">✓</div>
+          </button>
 
-        <div class="gg-common-card">
-          <div class="gg-common-icon">🎓</div>
-          <div class="gg-common-text">Education</div>
-        </div>
+          <button class="gg-rail-item gg-rail-item-v2" type="button">
+            <div class="gg-rail-main">
+              <div class="gg-rail-name">Emergency Fund</div>
+              <div class="gg-rail-meta">Primary • Safety</div>
+            </div>
+            <div class="gg-rail-check">✓</div>
+          </button>
 
-        <div class="gg-common-card">
-          <div class="gg-common-icon">💳</div>
-          <div class="gg-common-text">Pay off debt</div>
-        </div>
+          <button class="gg-rail-item gg-rail-item-v2" type="button">
+            <div class="gg-rail-main">
+              <div class="gg-rail-name">Trip</div>
+              <div class="gg-rail-meta">Secondary • Flexible</div>
+            </div>
+            <div class="gg-rail-check">✓</div>
+          </button>
 
-        <div class="gg-common-card">
-          <div class="gg-common-icon">✈️</div>
-          <div class="gg-common-text">Travel</div>
-        </div>
+          <button class="gg-rail-add" type="button">+ Add a goal</button>
+        </aside>
 
-        <div class="gg-common-card">
-          <div class="gg-common-icon">🧾</div>
-          <div class="gg-common-text">Bills buffer</div>
-        </div>
+        <!-- RIGHT -->
+        <div class="gg-panel gg-panel-v2">
+          <div class="gg-panel-top gg-panel-top-v2">
+            <div>
+              <h3 class="gg-panel-title">Common goals</h3>
+              <p class="gg-panel-sub">Popular choices — pick any to add later (static for now).</p>
+            </div>
+            <div class="gg-panel-badge">SUGGESTED</div>
+          </div>
 
-        <div class="gg-common-card">
-          <div class="gg-common-icon">📦</div>
-          <div class="gg-common-text">Business fund</div>
-        </div>
-
-        <div class="gg-common-card">
-          <div class="gg-common-icon">🛡️</div>
-          <div class="gg-common-text">Insurance reserve</div>
-        </div>
-
-        <div class="gg-common-card">
-          <div class="gg-common-icon">📈</div>
-          <div class="gg-common-text">Investing</div>
+          <div class="gg-common-grid">
+            <div class="gg-common-card"><div class="gg-common-icon">🏠</div><div class="gg-common-text">Down payment</div></div>
+            <div class="gg-common-card"><div class="gg-common-icon">🚗</div><div class="gg-common-text">Car fund</div></div>
+            <div class="gg-common-card"><div class="gg-common-icon">🎓</div><div class="gg-common-text">Education</div></div>
+            <div class="gg-common-card"><div class="gg-common-icon">💳</div><div class="gg-common-text">Pay off debt</div></div>
+            <div class="gg-common-card"><div class="gg-common-icon">✈️</div><div class="gg-common-text">Travel</div></div>
+            <div class="gg-common-card"><div class="gg-common-icon">🧾</div><div class="gg-common-text">Bills buffer</div></div>
+            <div class="gg-common-card"><div class="gg-common-icon">📦</div><div class="gg-common-text">Business fund</div></div>
+            <div class="gg-common-card"><div class="gg-common-icon">🛡️</div><div class="gg-common-text">Insurance reserve</div></div>
+            <div class="gg-common-card"><div class="gg-common-icon">📈</div><div class="gg-common-text">Investing</div></div>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-    <!-- ✅ FINAL CTA -->
+    <!-- FINAL CTA -->
     <section class="gg-final" id="start">
       <h2 class="gg-final-title">Ready to start saving smarter?</h2>
       <p class="gg-final-sub">
@@ -321,6 +278,5 @@
       els.forEach(el => io.observe(el));
     })();
   </script>
-
 </body>
 </html>
