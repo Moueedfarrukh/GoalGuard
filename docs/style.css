@@ -1080,4 +1080,12 @@ body{
   box-sizing: border-box;
 }
 
-
+@media (max-width: 768px){
+  .gg-nav{
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+/* Force Bootstrap navbar to behave on mobile */
+.navbar .navbar-nav { flex-wrap: wrap; }
+.navbar .btn { white-space: nowrap; }
