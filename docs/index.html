@@ -178,74 +178,109 @@
 
     <!-- ✅ GOALS EXPLORER -->
     <section class="gg-goals" id="goals">
-      <div class="gg-goals-head">
-        <h2 class="gg-goals-title">Explore your <span class="gg-dim">goals</span></h2>
-        <p class="gg-goals-sub">
-          Switch between goals on the left and see the details on the right — your plan stays protected.
-        </p>
-      </div>
+  <div class="gg-goals-head">
+    <h2 class="gg-goals-title">Goals <span class="gg-dim">Explorer</span></h2>
+    <p class="gg-goals-sub">
+      Left: goals you’ve selected. Right: common goals people usually pick.
+    </p>
+  </div>
 
-      <div class="gg-goals-shell">
-        <div class="gg-rail">
-          <div class="gg-rail-label">YOUR GOALS</div>
+  <div class="gg-goals-shell gg-goals-shell-v2">
+    <!-- LEFT: Your goals -->
+    <aside class="gg-rail gg-rail-v2">
+      <div class="gg-rail-label">YOUR GOALS</div>
 
-          <button class="gg-rail-item is-active" type="button">
-            <div class="gg-rail-main">
-              <div class="gg-rail-name">House Fund</div>
-              <div class="gg-rail-meta">Primary • Monthly</div>
-            </div>
-            <div class="gg-rail-check">✓</div>
-          </button>
+      <button class="gg-rail-item gg-rail-item-v2 is-active" type="button">
+        <div class="gg-rail-main">
+          <div class="gg-rail-name">House Fund</div>
+          <div class="gg-rail-meta">Primary • Monthly</div>
+        </div>
+        <div class="gg-rail-check">✓</div>
+      </button>
 
-          <button class="gg-rail-item" type="button">
-            <div class="gg-rail-main">
-              <div class="gg-rail-name">Trip</div>
-              <div class="gg-rail-meta">Secondary • Flexible</div>
-            </div>
-            <div class="gg-rail-check">✓</div>
-          </button>
+      <button class="gg-rail-item gg-rail-item-v2" type="button">
+        <div class="gg-rail-main">
+          <div class="gg-rail-name">Emergency Fund</div>
+          <div class="gg-rail-meta">Primary • Safety</div>
+        </div>
+        <div class="gg-rail-check">✓</div>
+      </button>
 
-          <button class="gg-rail-item" type="button">
-            <div class="gg-rail-main">
-              <div class="gg-rail-name">Emergency</div>
-              <div class="gg-rail-meta">Primary • Safety</div>
-            </div>
-            <div class="gg-rail-check">✓</div>
-          </button>
+      <button class="gg-rail-item gg-rail-item-v2" type="button">
+        <div class="gg-rail-main">
+          <div class="gg-rail-name">Trip</div>
+          <div class="gg-rail-meta">Secondary • Flexible</div>
+        </div>
+        <div class="gg-rail-check">✓</div>
+      </button>
+
+      <button class="gg-rail-add" type="button">
+        + Add a goal
+      </button>
+    </aside>
+
+    <!-- RIGHT: Common goals -->
+    <div class="gg-panel gg-panel-v2">
+      <div class="gg-panel-top gg-panel-top-v2">
+        <div>
+          <h3 class="gg-panel-title">Common goals</h3>
+          <p class="gg-panel-sub">
+            Popular choices — pick any to add later (static for now).
+          </p>
         </div>
 
-        <div class="gg-panel">
-          <div class="gg-panel-top">
-            <div>
-              <h3 class="gg-panel-title">House Fund</h3>
-              <p class="gg-panel-sub">
-                Protect this goal first. GoalGuard ensures your spending decisions don’t break the plan.
-              </p>
-            </div>
-            <div class="gg-panel-badge">PRIMARY</div>
-          </div>
+        <div class="gg-panel-badge">SUGGESTED</div>
+      </div>
 
-          <div class="gg-panel-grid">
-            <div class="gg-goal-card">
-              <h4>Target</h4>
-              <p>Set your amount and timeline.</p>
-            </div>
-            <div class="gg-goal-card">
-              <h4>Monthly Buffer</h4>
-              <p>Auto-adjusts based on bills & income.</p>
-            </div>
-            <div class="gg-goal-card">
-              <h4>Progress</h4>
-              <p>Track monthly movement clearly.</p>
-            </div>
-          </div>
+      <div class="gg-common-grid">
+        <div class="gg-common-card">
+          <div class="gg-common-icon">🏠</div>
+          <div class="gg-common-text">Down payment</div>
+        </div>
 
-          <div class="gg-panel-foot">
-            <span class="gg-foot-hint">Tip:</span> Ask “Can I buy this?” anytime — we’ll show the impact.
-          </div>
+        <div class="gg-common-card">
+          <div class="gg-common-icon">🚗</div>
+          <div class="gg-common-text">Car fund</div>
+        </div>
+
+        <div class="gg-common-card">
+          <div class="gg-common-icon">🎓</div>
+          <div class="gg-common-text">Education</div>
+        </div>
+
+        <div class="gg-common-card">
+          <div class="gg-common-icon">💳</div>
+          <div class="gg-common-text">Pay off debt</div>
+        </div>
+
+        <div class="gg-common-card">
+          <div class="gg-common-icon">✈️</div>
+          <div class="gg-common-text">Travel</div>
+        </div>
+
+        <div class="gg-common-card">
+          <div class="gg-common-icon">🧾</div>
+          <div class="gg-common-text">Bills buffer</div>
+        </div>
+
+        <div class="gg-common-card">
+          <div class="gg-common-icon">📦</div>
+          <div class="gg-common-text">Business fund</div>
+        </div>
+
+        <div class="gg-common-card">
+          <div class="gg-common-icon">🛡️</div>
+          <div class="gg-common-text">Insurance reserve</div>
+        </div>
+
+        <div class="gg-common-card">
+          <div class="gg-common-icon">📈</div>
+          <div class="gg-common-text">Investing</div>
         </div>
       </div>
-    </section>
+    </div>
+  </div>
+</section>
 
     <!-- ✅ FINAL CTA -->
     <section class="gg-final" id="start">
