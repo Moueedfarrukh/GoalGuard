@@ -996,3 +996,37 @@ body{
   font-weight: 700;
   color: rgba(228,238,240,0.55);
 }
+
+.gg-nav-actions button{
+  appearance:none;
+  cursor:pointer;
+  font-weight:700;
+  font-size:14px;
+  line-height:1;
+  padding:10px 16px;
+  border-radius:12px;
+  transition: transform .08s ease, background .2s ease, border-color .2s ease, color .2s ease;
+}
+
+.gg-nav-actions button:active{ transform: translateY(1px); }
+
+.gg-nav-actions button:first-child{
+  background: transparent;
+  color: rgba(255,255,255,0.9);
+  border: 1px solid rgba(255,255,255,0.25);
+}
+
+.gg-nav-actions button:first-child:hover{
+  background: rgba(255,255,255,0.06);
+  border-color: rgba(255,255,255,0.35);
+}
+
+.gg-nav-actions button:last-child{
+  background: #19c37d;
+  color: #071216;
+  border: 1px solid rgba(25,195,125,0.55);
+}
+
+.gg-nav-actions button:last-child:hover{
+  filter: brightness(1.05);
+}
