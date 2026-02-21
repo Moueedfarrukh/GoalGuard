@@ -5,14 +5,12 @@
    2) Reduce navbar height
    ========================= */
 
-/* ===== Global page ===== */
 :root{
   --mirage:#16232A;
   --orange:#FF5B04;
   --sea:#075056;
   --sand:#E4EEF0;
 
-  /* palette */
   --bg1:#16232A;
   --bg2:#0F1A20;
 
@@ -21,13 +19,11 @@
   --border:rgba(255,255,255,0.08);
 }
 
-/* ✅ Fix right-side gap (horizontal overflow) */
 html, body{
   width: 100%;
   overflow-x: hidden;
 }
 
-/* background conflict */
 html, body, .stAPP{
   background: transparent;
   height: 100%;
@@ -38,21 +34,16 @@ body{
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   background: linear-gradient(180deg, var(--bg1), var(--bg2));
   color: var(--textLight);
-  padding-top: 0; /* nav is fixed */
+  padding-top: 0;
 }
 
-/* ===== Wrapper shell around page content ===== */
 .gg-shell{
   max-width: 1220px;
   margin: 0 auto;
-  padding: 76px 16px 16px;  /* ✅ adjusted for smaller fixed nav */
+  padding: 76px 16px 16px;
 }
 
-/* =========================
-   ✅ NAVBAR (single source of truth)
-   - fixed at top
-   - reduced height
-   ========================= */
+/* NAV */
 .gg-nav{
   position: fixed;
   top: 0;
@@ -63,8 +54,6 @@ body{
   background: rgba(15,26,32,.72);
   border-bottom: 1px solid rgba(255,255,255,.08);
   backdrop-filter: blur(10px);
-
-  /* ✅ reduced vertical space */
   padding: 6px 0;
 }
 
@@ -72,23 +61,18 @@ body{
   width: 100%;
   max-width: 1460px;
   margin: 0 auto;
-
   display:flex;
   align-items:center;
   justify-content: space-between;
   gap: 18px;
-
-  /* ✅ reduced inner padding */
   padding: 10px 22px;
 }
 
 .gg-brand{
   font-weight: 800;
-  font-size: 20px;     /* ✅ slightly smaller */
+  font-size: 20px;
   color: #fff;
   text-decoration: none;
-
-  /* (optional subtle badge look, kept minimal) */
   padding: 6px 12px;
   border-radius: 12px;
   background: rgba(255,255,255,0.05);
@@ -118,9 +102,8 @@ body{
   display: inline-flex;
   align-items: center;
   justify-content: center;
-
-  height: 36px;        /* ✅ reduced height */
-  padding: 0 12px;     /* ✅ reduced padding */
+  height: 36px;
+  padding: 0 12px;
   border-radius: 10px;
   font-weight: 700;
   text-decoration: none;
@@ -134,23 +117,17 @@ body{
 }
 
 .gg-btn-solid{
-  background: #22c55e; /* green */
+  background: #22c55e;
   border: 1px solid rgba(0,0,0,0);
   color: #0b1220;
 }
 
-/* Mobile: wrap nicely */
 @media (max-width: 768px){
   .gg-nav-inner{ flex-wrap: wrap; padding: 10px 16px; }
-  .gg-nav-links, .gg-nav-actions{
-    width: 100%;
-    justify-content: center;
-  }
+  .gg-nav-links, .gg-nav-actions{ width: 100%; justify-content: center; }
 }
 
-/* =========================
-   HERO
-   ========================= */
+/* HERO */
 .gg-hero-clean{
   text-align: center;
   padding: 110px 20px 80px;
@@ -211,7 +188,6 @@ body{
   font-size: 13px;
 }
 
-/* Hero spotlight glow */
 .gg-hero-clean:before{
   content:"";
   position:absolute;
@@ -229,7 +205,7 @@ body{
   z-index: -1;
 }
 
-/* Scroll Sections */
+/* HOW/SECTIONS */
 .gg-section{
   margin-top: 26px;
   padding: 18px;
@@ -239,49 +215,6 @@ body{
   backdrop-filter: blur(12px);
 }
 
-.gg-section h2{
-  margin: 0 0 14px 0;
-  color: var(--sand);
-  font-size: 22px;
-  font-weight: 950;
-}
-
-.gg-grid{
-  display:grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 14px;
-}
-
-.gg-card{
-  padding: 16px;
-  background: rgba(22,35,42,0.75);
-  border: 1px solid var(--border);
-  border-radius: 18px;
-}
-
-.gg-card h3{
-  margin: 0 0 8px 0;
-  color: var(--sand);
-  font-size: 16px;
-  font-weight: 900;
-}
-
-.gg-card p{
-  margin: 0;
-  color: var(--muted);
-  line-height: 1.5;
-  font-size: 13.5px;
-}
-
-@media (max-width: 980px){
-  .gg-grid{ grid-template-columns: 1fr; }
-  .gg-title{ font-size: 38px; }
-  .gg-hero-clean{ padding: 80px 14px 60px; }
-}
-
-/* =========================
-   Steps section (How it works)
-   ========================= */
 .gg-steps{
   padding: 28px 22px;
 }
@@ -290,7 +223,6 @@ body{
   margin: 0;
   font-size: 44px;
   font-weight: 950;
-  letter-spacing: 0.2px;
   color: var(--sand);
 }
 
@@ -317,23 +249,16 @@ body{
   background: rgba(0,0,0,0.20);
   border: 1px solid rgba(255,255,255,0.08);
   box-shadow: 0 24px 70px rgba(0,0,0,0.35);
-
   transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease, background 220ms ease;
-  will-change: transform;
 }
 
-.gg-step-card h3{
-  margin: 16px 0 8px 0;
-  font-size: 22px;
-  font-weight: 900;
-  color: var(--sand);
-}
-
-.gg-step-card p{
-  margin: 0;
-  color: var(--muted);
-  font-size: 14.5px;
-  line-height: 1.55;
+.gg-step-card:hover{
+  transform: translateY(-6px);
+  border-color: rgba(255,255,255,0.14);
+  box-shadow:
+    0 28px 80px rgba(0,0,0,0.48),
+    0 0 0 1px rgba(255,255,255,0.06) inset;
+  background: rgba(0,0,0,0.24);
 }
 
 .gg-step-badge{
@@ -347,16 +272,6 @@ body{
   color: var(--sand);
   background: rgba(228,238,240,0.08);
   border: 1px solid rgba(228,238,240,0.16);
-}
-
-.gg-step-accent{
-  border-color: rgba(255,91,4,0.25);
-  box-shadow: 0 24px 80px rgba(255,91,4,0.12);
-}
-
-.gg-step-badge-accent{
-  background: rgba(255,91,4,0.18);
-  border: 1px solid rgba(255,91,4,0.28);
 }
 
 .gg-step-arrow{
@@ -387,57 +302,13 @@ body{
   font-size: 12px;
 }
 
-.gg-step-mini-stack{
-  flex-direction: column;
-  gap: 10px;
-}
-
-.gg-style-row{
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  color: rgba(234,244,247,0.85);
-  font-weight: 800;
-  font-size: 13px;
-}
-
-.gg-style-dot{
-  width: 10px;
-  height: 10px;
-  border-radius: 999px;
-  background: rgba(255,91,4,0.8);
-  box-shadow: 0 0 0 6px rgba(255,91,4,0.12);
-}
-
 @media (max-width: 1100px){
   .gg-steps-row{ grid-template-columns: 1fr; }
   .gg-step-arrow{ display: none; }
   .gg-steps-head h2{ font-size: 34px; }
 }
 
-/* hover glow */
-.gg-step-card:hover{
-  transform: translateY(-6px);
-  border-color: rgba(255,255,255,0.14);
-  box-shadow:
-    0 28px 80px rgba(0,0,0,0.48),
-    0 0 0 1px rgba(255,255,255,0.06) inset;
-  background: rgba(0,0,0,0.24);
-}
-
-.gg-step-card.gg-step-accent:hover{
-  border-color: rgba(255,91,4,0.34);
-  box-shadow:
-    0 30px 90px rgba(0,0,0,0.50),
-    0 18px 70px rgba(255,91,4,0.16);
-}
-
-.gg-steps-row:hover .gg-step-arrow{
-  color: rgba(228,238,240,0.45);
-  transition: color 200ms ease;
-}
-
-/* Scroll reveal */
+/* reveal */
 .gg-reveal{
   opacity: 0;
   transform: translateY(18px);
@@ -447,42 +318,12 @@ body{
   opacity: 1;
   transform: translateY(0);
 }
-.gg-step-card.gg-reveal[data-delay="1"]{ transition-delay: 80ms; }
-.gg-step-card.gg-reveal[data-delay="2"]{ transition-delay: 160ms; }
-.gg-step-card.gg-reveal[data-delay="3"]{ transition-delay: 240ms; }
 
-/* =========================
-   FEATURES (kept as you had)
-   ========================= */
+/* FEATURES */
 .gg-features{
   max-width: 1220px;
   margin: 0 auto;
   padding: 90px 16px 20px;
-}
-
-.gg-features-head{
-  max-width: 720px;
-  margin: 0 0 26px 0;
-}
-
-.gg-features-title{
-  margin: 0;
-  font-size: 56px;
-  line-height: 1.02;
-  font-weight: 950;
-  color: var(--sand);
-  letter-spacing: 0.2px;
-}
-
-.gg-features-title .gg-dim{
-  color: rgba(228,238,240,0.60);
-}
-
-.gg-features-sub{
-  margin-top: 14px;
-  color: var(--muted);
-  font-size: 18px;
-  line-height: 1.6;
 }
 
 .gg-features-grid{
@@ -492,192 +333,15 @@ body{
   margin-top: 26px;
 }
 
-.gg-feature-card{
-  border-radius: 22px;
-  padding: 22px;
-  background: rgba(10,14,22,0.55);
-  border: 1px solid rgba(255,255,255,0.10);
-  box-shadow: 0 24px 80px rgba(0,0,0,0.55);
-  position: relative;
-  overflow: hidden;
-  transform: translateY(0);
-  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
-}
-
-.gg-feature-border{
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 3px;
-  width: 100%;
-  opacity: 0.95;
-}
-
-.gg-feature-top{
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 12px;
-  margin-bottom: 16px;
-}
-
-.gg-feature-icon{
-  width: 46px;
-  height: 46px;
-  border-radius: 14px;
-  display: grid;
-  place-items: center;
-  font-size: 18px;
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.10);
-}
-
-.gg-feature-h{
-  margin: 0;
-  font-size: 22px;
-  font-weight: 950;
-  color: var(--sand);
-}
-
-.gg-feature-p{
-  margin: 10px 0 0;
-  color: rgba(228,238,240,0.65);
-  font-size: 15px;
-  line-height: 1.6;
-  min-height: 66px;
-}
-
-.gg-feature-mini{
-  margin-top: 18px;
-  border-radius: 18px;
-  padding: 16px;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.10);
-}
-
-.gg-green .gg-feature-border{ background: linear-gradient(90deg, rgba(59,240,189,0.0), rgba(59,240,189,0.9), rgba(59,240,189,0.0)); }
-.gg-purple .gg-feature-border{ background: linear-gradient(90deg, rgba(160,120,255,0.0), rgba(160,120,255,0.9), rgba(160,120,255,0.0)); }
-.gg-pink .gg-feature-border{ background: linear-gradient(90deg, rgba(255,92,178,0.0), rgba(255,92,178,0.9), rgba(255,92,178,0.0)); }
-
-.gg-feature-card:hover{
-  transform: translateY(-6px);
-  border-color: rgba(255,255,255,0.18);
-  box-shadow: 0 28px 100px rgba(0,0,0,0.65);
-}
-
-/* Mini visuals */
-.gg-mini-bars{
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 8px;
-  align-items: end;
-  height: 60px;
-}
-.gg-mini-bars span{
-  display:block;
-  border-radius: 8px;
-  background: rgba(255,255,255,0.16);
-  height: 20px;
-}
-.gg-mini-bars span:nth-child(1){ height: 22px; }
-.gg-mini-bars span:nth-child(2){ height: 34px; }
-.gg-mini-bars span:nth-child(3){ height: 26px; }
-.gg-mini-bars span:nth-child(4){ height: 40px; }
-.gg-mini-bars span:nth-child(5){ height: 34px; }
-.gg-mini-bars span:nth-child(6){ height: 48px; }
-.gg-mini-bars span:nth-child(7){ height: 54px; }
-
-.gg-mini-note{
-  margin-top: 10px;
-  font-weight: 800;
-  color: rgba(228,238,240,0.75);
-  font-size: 13px;
-}
-
-/* Ring */
-.gg-mini-ring{
-  display:flex;
-  align-items:center;
-  gap: 14px;
-}
-.gg-ring{
-  width: 70px;
-  height: 70px;
-  border-radius: 999px;
-  display:grid;
-  place-items:center;
-  font-weight: 950;
-  font-size: 24px;
-  color: var(--sand);
-  border: 6px solid rgba(255,255,255,0.14);
-  box-shadow: inset 0 0 0 10px rgba(255,255,255,0.02);
-}
-.gg-ring span{
-  font-size: 13px;
-  margin-left: 2px;
-  color: rgba(228,238,240,0.7);
-}
-
-/* Wave */
-.gg-mini-wave{
-  flex: 1;
-  display:flex;
-  gap: 6px;
-  align-items:center;
-  justify-content:center;
-}
-.gg-mini-wave span{
-  width: 6px;
-  border-radius: 10px;
-  background: rgba(255,255,255,0.16);
-  height: 18px;
-}
-.gg-mini-wave span:nth-child(1){height: 16px;}
-.gg-mini-wave span:nth-child(2){height: 26px;}
-.gg-mini-wave span:nth-child(3){height: 34px;}
-.gg-mini-wave span:nth-child(4){height: 42px;}
-.gg-mini-wave span:nth-child(5){height: 42px;}
-.gg-mini-wave span:nth-child(6){height: 34px;}
-.gg-mini-wave span:nth-child(7){height: 26px;}
-.gg-mini-wave span:nth-child(8){height: 18px;}
-
-/* Chips */
-.gg-chip-row{
-  display:flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-.gg-chip.accent{
-  color: #ffd6ea;
-  border-color: rgba(255,92,178,0.35);
-  background: rgba(255,92,178,0.12);
-}
-
-.gg-mini-big{
-  margin-top: 16px;
-  display:flex;
-  align-items: baseline;
-  gap: 10px;
-}
-.gg-mini-num{
-  font-size: 34px;
-  font-weight: 950;
-  color: #ff7ac5;
-}
-.gg-mini-label{
-  color: rgba(228,238,240,0.65);
-  font-weight: 800;
-}
-
-/* Responsive */
 @media (max-width: 980px){
-  .gg-features-title{ font-size: 40px; }
   .gg-features-grid{ grid-template-columns: 1fr; }
+  .gg-title{ font-size: 38px; }
+  .gg-hero-clean{ padding: 80px 14px 60px; }
 }
-/* =========================
-   Goals Explorer (left rail + right panel)
-   ========================= */
 
+/* =========================
+   ✅ GOALS EXPLORER (FULL)
+   ========================= */
 .gg-goals{
   padding: 40px 0 10px;
 }
@@ -692,7 +356,6 @@ body{
   margin: 0;
   font-size: 52px;
   font-weight: 950;
-  letter-spacing: 0.2px;
   color: var(--sand);
 }
 .gg-goals-title .gg-dim{
@@ -728,6 +391,67 @@ body{
   padding: 14px;
 }
 
+.gg-rail-label{
+  font-size: 12px;
+  letter-spacing: 1.2px;
+  font-weight: 900;
+  color: rgba(228,238,240,0.55);
+  margin: 6px 8px 14px;
+}
+
+.gg-rail-item{
+  width: 100%;
+  text-align: left;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.03);
+  border-radius: 16px;
+  padding: 14px 14px;
+  margin-bottom: 12px;
+  display:flex;
+  align-items:center;
+  justify-content: space-between;
+  gap: 14px;
+  cursor: pointer;
+  transition: 220ms ease;
+  color: inherit;
+}
+
+.gg-rail-item:hover{
+  transform: translateY(-1px);
+  border-color: rgba(255,255,255,0.16);
+  background: rgba(255,255,255,0.05);
+}
+
+.gg-rail-item.is-active{
+  background: linear-gradient(135deg, rgba(255,91,4,0.18), rgba(255,91,4,0.06));
+  border-color: rgba(255,91,4,0.35);
+}
+
+.gg-rail-main{ display:flex; flex-direction:column; gap: 6px; }
+.gg-rail-name{
+  color: var(--sand);
+  font-weight: 950;
+  font-size: 16px;
+}
+.gg-rail-meta{
+  color: rgba(228,238,240,0.55);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.gg-rail-check{
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color: rgba(255,255,255,0.85);
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.05);
+  flex: 0 0 auto;
+}
+
 .gg-panel{
   border-radius: 18px;
   border: 1px solid rgba(255,255,255,0.06);
@@ -736,10 +460,100 @@ body{
   min-height: 420px;
 }
 
-/* =========================
-   Final CTA Slide
-   ========================= */
+.gg-panel-top{
+  display:flex;
+  align-items:flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 14px;
+}
 
+.gg-panel-title{
+  margin: 0;
+  color: var(--sand);
+  font-size: 28px;
+  font-weight: 950;
+}
+
+.gg-panel-sub{
+  margin: 10px 0 0;
+  color: var(--muted);
+  font-size: 14.5px;
+  line-height: 1.55;
+  max-width: 720px;
+}
+
+.gg-panel-badge{
+  font-weight: 950;
+  font-size: 12px;
+  letter-spacing: 0.8px;
+  padding: 8px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.05);
+  color: rgba(228,238,240,0.85);
+}
+
+.gg-panel-grid{
+  margin-top: 16px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.gg-goal-card{
+  padding: 16px;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(22,35,42,0.52);
+  transition: 220ms ease;
+}
+
+.gg-goal-card:hover{
+  transform: translateY(-2px);
+  border-color: rgba(255,255,255,0.16);
+  background: rgba(22,35,42,0.66);
+}
+
+.gg-goal-card h4{
+  margin: 0 0 8px;
+  color: var(--sand);
+  font-weight: 950;
+  font-size: 15px;
+}
+
+.gg-goal-card p{
+  margin: 0;
+  color: rgba(228,238,240,0.62);
+  line-height: 1.5;
+  font-size: 13.5px;
+}
+
+.gg-panel-foot{
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  color: rgba(228,238,240,0.70);
+  font-size: 13.5px;
+  display:flex;
+  gap: 8px;
+  align-items:center;
+}
+
+.gg-foot-hint{
+  color: rgba(255,91,4,0.95);
+  font-weight: 950;
+}
+
+@media (max-width: 1060px){
+  .gg-goals-shell{ grid-template-columns: 1fr; }
+  .gg-panel-grid{ grid-template-columns: 1fr; }
+  .gg-goals-title{ font-size: 40px; }
+}
+
+/* =========================
+   ✅ FINAL CTA
+   ========================= */
 .gg-final{
   padding: 120px 16px 120px;
   text-align: center;
@@ -772,6 +586,18 @@ body{
   font-weight:900;
   font-size:17px;
   box-shadow:0 16px 50px rgba(255,91,4,0.35);
+  transition: 0.25s ease;
+}
+
+.gg-final-btn:hover{
+  transform: translateY(-2px);
+  box-shadow:0 22px 60px rgba(255,91,4,0.45);
+}
+
+.gg-final-arrow{
+  font-size: 22px;
+  margin-left: 2px;
+  opacity: 0.95;
 }
 
 .gg-final-note{
