@@ -20,6 +20,12 @@
 
 <!-- Shell -->
 <div class="gg-shell">
+  
+  <nav class="gg-nav">
+  <div class="gg-nav-inner">
+    <!-- your existing navbar content -->
+  </div>
+</nav>
 
   <!-- NAV -->
   <nav class="navbar navbar-expand-lg navbar-dark" style="background:#0F1A20;">
@@ -36,13 +42,14 @@
       <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-3 mt-3 mt-lg-0">
         <li class="nav-item"><a class="nav-link" href="#how">How it works</a></li>
         <li class="nav-item"><a class="nav-link" href="#features">Features</a></li>
-        <li class="nav-item"><a class="btn btn-outline-light" href="#" data-open="signinOverlay">Sign In</a></li>
-        <li class="nav-item"><a class="btn btn-success" href="#" data-open="signupOverlay">Sign Up</a></li>
+        <li class="nav-item"><a class="btn btn-outline-light" href="#signin">Sign In</a></li>
+        <li class="nav-item"><a class="btn btn-success" href="#signup">Sign Up</a></li>
       </ul>
     </div>
 
   </div>
 </nav>
+
 
   <!-- HERO (FLOATING TEXT — no card) -->
   <section class="gg-hero-clean">
@@ -417,161 +424,5 @@
 })();
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<!-- Sign In Modal -->
-<div class="modal-overlay" id="signinOverlay" aria-hidden="true">
-  <div class="auth-card" role="dialog" aria-modal="true" aria-labelledby="signinTitle">
-    <button class="auth-close" type="button" data-close="signinOverlay" aria-label="Close">×</button>
-
-    <div class="auth-brand">
-      <span class="auth-logo">m</span><span class="auth-name">OTALLK</span>
-    </div>
-
-    <h2 class="auth-title" id="signinTitle">Welcome back</h2>
-    <p class="auth-subtitle">Sign in to continue your journey</p>
-
-    <button class="auth-google" type="button">
-      <span class="g-badge">G</span>
-      Continue with Google
-    </button>
-
-    <div class="auth-divider"><span>or continue with email</span></div>
-
-    <form class="auth-form" onsubmit="event.preventDefault(); alert('Demo only — connect a backend/auth provider to log in.');">
-      <label class="auth-label">Email</label>
-      <div class="auth-field">
-        <span class="auth-icon">✉️</span>
-        <input class="auth-input" type="email" placeholder="you@example.com" required />
-      </div>
-
-      <label class="auth-label">Password</label>
-      <div class="auth-field">
-        <span class="auth-icon">🔒</span>
-        <input class="auth-input" type="password" placeholder="Enter your password" required />
-        <button class="auth-eye" type="button" aria-label="Toggle password" data-toggle="password">👁️</button>
-      </div>
-
-      <button class="auth-submit" type="submit">Sign In</button>
-
-      <p class="auth-footer">
-        Don't have an account?
-        <a href="#" data-switch="signupOverlay">Sign up</a>
-      </p>
-    </form>
-  </div>
-</div>
-
-<!-- Sign Up Modal -->
-<div class="modal-overlay" id="signupOverlay" aria-hidden="true">
-  <div class="auth-card" role="dialog" aria-modal="true" aria-labelledby="signupTitle">
-    <button class="auth-close" type="button" data-close="signupOverlay" aria-label="Close">×</button>
-
-    <div class="auth-brand">
-      <span class="auth-logo">m</span><span class="auth-name">OTALLK</span>
-    </div>
-
-    <h2 class="auth-title" id="signupTitle">Create account</h2>
-    <p class="auth-subtitle">Sign up to get started</p>
-
-    <button class="auth-google" type="button">
-      <span class="g-badge">G</span>
-      Continue with Google
-    </button>
-
-    <div class="auth-divider"><span>or continue with email</span></div>
-
-    <form class="auth-form" onsubmit="event.preventDefault(); alert('Demo only — connect a backend/auth provider to sign up.');">
-      <label class="auth-label">Email</label>
-      <div class="auth-field">
-        <span class="auth-icon">✉️</span>
-        <input class="auth-input" type="email" placeholder="you@example.com" required />
-      </div>
-
-      <label class="auth-label">Password</label>
-      <div class="auth-field">
-        <span class="auth-icon">🔒</span>
-        <input class="auth-input" type="password" placeholder="Create a password" required />
-        <button class="auth-eye" type="button" aria-label="Toggle password" data-toggle="password">👁️</button>
-      </div>
-
-      <button class="auth-submit" type="submit">Sign Up</button>
-
-      <p class="auth-footer">
-        Already have an account?
-        <a href="#" data-switch="signinOverlay">Sign in</a>
-      </p>
-    </form>
-  </div>
-</div>
-<script>
-  // Open modals
-  function openModal(id){
-    const el = document.getElementById(id);
-    if(!el) return;
-    el.classList.add("open");
-    el.setAttribute("aria-hidden", "false");
-    document.body.style.overflow = "hidden";
-  }
-
-  // Close modals
-  function closeModal(id){
-    const el = document.getElementById(id);
-    if(!el) return;
-    el.classList.remove("open");
-    el.setAttribute("aria-hidden", "true");
-    document.body.style.overflow = "";
-  }
-
-  // Hook up navbar buttons (use these IDs on your buttons)
-  document.addEventListener("click", (e) => {
-    const open = e.target.closest("[data-open]");
-    if(open){
-      e.preventDefault();
-      openModal(open.getAttribute("data-open"));
-      return;
-    }
-
-    const close = e.target.closest("[data-close]");
-    if(close){
-      e.preventDefault();
-      closeModal(close.getAttribute("data-close"));
-      return;
-    }
-
-    const sw = e.target.closest("[data-switch]");
-    if(sw){
-      e.preventDefault();
-      const target = sw.getAttribute("data-switch");
-      closeModal("signinOverlay");
-      closeModal("signupOverlay");
-      openModal(target);
-      return;
-    }
-
-    // click outside card closes
-    const overlay = e.target.classList?.contains("modal-overlay") ? e.target : null;
-    if(overlay){
-      closeModal(overlay.id);
-      return;
-    }
-
-    // toggle password visibility
-    const toggle = e.target.closest("[data-toggle='password']");
-    if(toggle){
-      const field = toggle.closest(".auth-field");
-      const input = field?.querySelector("input");
-      if(input){
-        input.type = input.type === "password" ? "text" : "password";
-      }
-    }
-  });
-
-  // ESC closes any open modal
-  document.addEventListener("keydown", (e) => {
-    if(e.key === "Escape"){
-      closeModal("signinOverlay");
-      closeModal("signupOverlay");
-    }
-  });
-</script>
 </body>
 </html>
