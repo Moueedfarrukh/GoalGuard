@@ -1102,4 +1102,80 @@ body{
   align-items:center;
   justify-content: space-between;
 }
+/* ===== GoalGuard navbar (non-sticky) ===== */
+.gg-nav{
+  width: 100%;
+  background: rgba(15,26,32,.72);
+  border-bottom: 1px solid rgba(255,255,255,.08);
+  backdrop-filter: blur(10px);
+}
 
+.gg-nav-inner{
+  max-width: 1460px;
+  margin: 0 auto;
+  padding: 14px 28px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.gg-brand{
+  font-weight: 800;
+  font-size: 22px;
+  color: #fff;
+  text-decoration: none;
+}
+
+.gg-nav-links{
+  display: flex;
+  align-items: center;
+  gap: 26px;
+}
+
+.gg-link{
+  color: rgba(255,255,255,.75);
+  text-decoration: none;
+  font-weight: 500;
+}
+.gg-link:hover{ color:#fff; }
+
+.gg-nav-actions{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.gg-btn{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  padding: 0 14px;
+  border-radius: 10px;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.gg-btn-ghost{
+  background: transparent;
+  border: 1px solid rgba(255,255,255,.70);
+  color: #fff;
+}
+
+.gg-btn-solid{
+  background: #22c55e;   /* green */
+  border: 1px solid rgba(0,0,0,0);
+  color: #0b1220;
+}
+
+/* Mobile: wrap nicely */
+@media (max-width: 768px){
+  .gg-nav-inner{ flex-wrap: wrap; padding: 12px 16px; }
+  .gg-nav-links, .gg-nav-actions{
+    width: 100%;
+    justify-content: center;
+  }
+}
