@@ -1,11 +1,6 @@
 /* =========================
    GoalGuard — style.css
-   Clean, single definitions (no overlaps)
-   Fixes:
-   1) No right-side overflow gap
-   2) Short fixed navbar
-   3) Features cards + mini graphs restored
-   4) Goals Explorer V2 (sidebar + common goals)
+   + Full screen snap scrolling
    ========================= */
 
 :root{
@@ -20,17 +15,16 @@
   --textLight:#EAF4F7;
   --muted:rgba(234,244,247,0.65);
   --border:rgba(255,255,255,0.08);
+
+  --navH: 76px;
 }
 
 /* Prevent right-side gap */
 html, body{
   width: 100%;
-  overflow-x: hidden;
-}
-
-html, body, .stAPP{
-  background: transparent;
   height: 100%;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
 }
 
 body{
@@ -38,18 +32,10 @@ body{
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   background: linear-gradient(180deg, var(--bg1), var(--bg2));
   color: var(--textLight);
-  padding-top: 0;
-}
-
-/* Page shell */
-.gg-shell{
-  max-width: 1220px;
-  margin: 0 auto;
-  padding: 76px 16px 16px; /* space for fixed navbar */
 }
 
 /* =========================
-   NAV (fixed, short)
+   NAV (fixed)
    ========================= */
 .gg-nav{
   position: fixed;
@@ -103,38 +89,74 @@ body{
 .gg-link:hover{ color:#fff; }
 
 .gg-nav-actions{
-  display: flex;
-  align-items: center;
-  gap: 12px;
+  display:flex;
+  align-items:center;
+  gap:12px;
 }
 
+/* Nav buttons */
 .gg-btn{
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  height: 36px;
-  padding: 0 12px;
-  border-radius: 10px;
-  font-weight: 700;
-  text-decoration: none;
-  white-space: nowrap;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  height:36px;
+  padding:0 14px;
+  border-radius:10px;
+  font-weight:700;
+  font-size:14px;
+  border:none;
+  cursor:pointer;
+  transition:all .18s ease;
 }
 
 .gg-btn-ghost{
-  background: transparent;
-  border: 1px solid rgba(255,255,255,.70);
-  color: #fff;
+  background:transparent;
+  border:1px solid rgba(255,255,255,.70);
+  color:#fff;
 }
+.gg-btn-ghost:hover{ background:rgba(255,255,255,0.06); }
 
 .gg-btn-solid{
-  background: #22c55e;
-  border: 1px solid rgba(0,0,0,0);
-  color: #0b1220;
+  background:#22c55e;
+  border:1px solid rgba(0,0,0,0);
+  color:#0b1220;
 }
+.gg-btn-solid:hover{ filter:brightness(1.05); }
 
+/* Responsive nav */
 @media (max-width: 768px){
   .gg-nav-inner{ flex-wrap: wrap; padding: 10px 16px; }
   .gg-nav-links, .gg-nav-actions{ width: 100%; justify-content: center; }
+}
+
+/* =========================
+   SNAP SCROLLING (THE FIX)
+   ========================= */
+.gg-shell{
+  /* keep content below fixed nav */
+  padding-top: var(--navH);
+  max-width: 1220px;
+  margin: 0 auto;
+}
+
+/* Enable snapping */
+.gg-snap{
+  scroll-snap-type: y mandatory;
+}
+
+/* One full screen per section */
+.gg-snap-section{
+  min-height: calc(100vh - var(--navH));
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+
+  /* prevent peeking */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  /* spacing without showing next section */
+  padding: 24px 16px;
 }
 
 /* =========================
@@ -142,9 +164,6 @@ body{
    ========================= */
 .gg-hero-clean{
   text-align: center;
-  padding: 110px 20px 80px;
-  position: relative;
-  overflow: visible;
 }
 
 .gg-pill{
@@ -200,30 +219,10 @@ body{
   font-size: 13px;
 }
 
-/* Hero glow */
-.gg-hero-clean:before{
-  content:"";
-  position:absolute;
-  left:50%;
-  top:30%;
-  transform: translate(-50%, -50%);
-  width: 900px;
-  height: 420px;
-  background: radial-gradient(circle,
-    rgba(255,91,4,0.18) 0%,
-    rgba(7,80,86,0.14) 35%,
-    rgba(0,0,0,0.00) 70%
-  );
-  filter: blur(18px);
-  z-index: -1;
-}
-
 /* =========================
    HOW / STEPS
    ========================= */
 .gg-section{
-  margin-top: 26px;
-  padding: 18px;
   border-radius: 20px;
   border: 1px solid rgba(255,255,255,0.06);
   background: rgba(18,22,34,0.45);
@@ -383,17 +382,10 @@ body{
 }
 
 /* =========================
-   FEATURES (FULL — restored)
+   FEATURES
    ========================= */
-/* =========================
-   FEATURES — upgraded to match reference UI
-   (GoalGuard colors + finance copy stays same)
-   ========================= */
-
 .gg-features{
-  max-width: 1220px;
-  margin: 0 auto;
-  padding: 90px 16px 20px;
+  width: 100%;
 }
 
 .gg-features-head{
@@ -407,7 +399,6 @@ body{
   line-height: 1.02;
   font-weight: 950;
   color: var(--sand);
-  letter-spacing: 0.2px;
 }
 
 .gg-features-title .gg-dim{
@@ -428,12 +419,10 @@ body{
   margin-top: 34px;
 }
 
-/* Each colored wrapper sets an accent variable */
 .gg-green{  --accent: rgba(59,240,189,0.95); --accentSoft: rgba(59,240,189,0.14); }
 .gg-purple{ --accent: rgba(160,120,255,0.95); --accentSoft: rgba(160,120,255,0.14); }
 .gg-pink{   --accent: rgba(255,92,178,0.95); --accentSoft: rgba(255,92,178,0.14); }
 
-/* Big elevated card (like reference) */
 .gg-feature-card{
   border-radius: 26px;
   padding: 28px;
@@ -445,22 +434,16 @@ body{
   transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
 }
 
-/* Top accent stroke */
 .gg-feature-border{
   position: absolute;
   top: 0;
   left: 0;
   height: 4px;
   width: 100%;
-  background: linear-gradient(90deg,
-    rgba(0,0,0,0),
-    var(--accent),
-    rgba(0,0,0,0)
-  );
+  background: linear-gradient(90deg, rgba(0,0,0,0), var(--accent), rgba(0,0,0,0));
   opacity: 0.95;
 }
 
-/* Subtle glow wash */
 .gg-feature-card:before{
   content:"";
   position:absolute;
@@ -469,23 +452,18 @@ body{
   transform: translateX(-50%);
   width: 520px;
   height: 260px;
-  background: radial-gradient(circle,
-    var(--accentSoft) 0%,
-    rgba(0,0,0,0) 70%
-  );
+  background: radial-gradient(circle, var(--accentSoft) 0%, rgba(0,0,0,0) 70%);
   filter: blur(18px);
   opacity: 0.95;
   pointer-events: none;
 }
 
-/* Hover lift */
 .gg-feature-card:hover{
   transform: translateY(-6px);
   border-color: rgba(255,255,255,0.18);
   box-shadow: 0 38px 110px rgba(0,0,0,0.65);
 }
 
-/* Top row */
 .gg-feature-top{
   display: flex;
   align-items: center;
@@ -493,7 +471,6 @@ body{
   margin-bottom: 14px;
 }
 
-/* Icon badge (like reference) */
 .gg-feature-icon{
   width: 52px;
   height: 52px;
@@ -501,13 +478,11 @@ body{
   display: grid;
   place-items: center;
   font-size: 18px;
-
   background: rgba(255,255,255,0.05);
   border: 1px solid rgba(255,255,255,0.10);
   box-shadow: 0 14px 40px rgba(0,0,0,0.35);
 }
 
-/* Title & copy */
 .gg-feature-h{
   margin: 0;
   font-size: 24px;
@@ -523,24 +498,17 @@ body{
   min-height: 74px;
 }
 
-/* Visual panel at bottom (this is what you're missing right now) */
 .gg-feature-mini{
   margin-top: 22px;
   border-radius: 22px;
   padding: 18px;
-  background: linear-gradient(180deg,
-    rgba(255,255,255,0.04),
-    rgba(0,0,0,0.18)
-  );
+  background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(0,0,0,0.18));
   border: 1px solid rgba(255,255,255,0.10);
-  box-shadow:
-    0 18px 60px rgba(0,0,0,0.45),
-    0 0 0 1px rgba(255,255,255,0.04) inset;
+  box-shadow: 0 18px 60px rgba(0,0,0,0.45), 0 0 0 1px rgba(255,255,255,0.04) inset;
   position: relative;
   overflow: hidden;
 }
 
-/* Panel tinted glow */
 .gg-feature-mini:before{
   content:"";
   position:absolute;
@@ -551,7 +519,6 @@ body{
   pointer-events:none;
 }
 
-/* Mini bars — now use accent color */
 .gg-mini-bars{
   display: grid;
   grid-template-columns: repeat(8, 1fr);
@@ -582,7 +549,6 @@ body{
   font-size: 13px;
 }
 
-/* Ring — accent border */
 .gg-mini-ring{
   display:flex;
   align-items:center;
@@ -610,7 +576,6 @@ body{
   border-radius:999px;
   border: 6px solid var(--accent);
   opacity: 0.55;
-  filter: blur(0.2px);
 }
 
 .gg-ring span{
@@ -619,7 +584,6 @@ body{
   color: rgba(228,238,240,0.7);
 }
 
-/* Wave — accent bars */
 .gg-mini-wave{
   flex: 1;
   display:flex;
@@ -644,21 +608,10 @@ body{
 .gg-mini-wave span:nth-child(7){height: 28px;}
 .gg-mini-wave span:nth-child(8){height: 18px;}
 
-/* Chips inside panel */
 .gg-chip-row{
   display:flex;
   flex-wrap: wrap;
   gap: 10px;
-}
-
-.gg-chip{
-  padding: 9px 12px;
-  border-radius: 999px;
-  font-weight: 850;
-  font-size: 13px;
-  color: rgba(228,238,240,0.78);
-  border: 1px solid rgba(255,255,255,0.12);
-  background: rgba(255,255,255,0.04);
 }
 
 .gg-chip.accent{
@@ -667,7 +620,6 @@ body{
   background: rgba(255,255,255,0.06);
 }
 
-/* Stat block */
 .gg-mini-big{
   margin-top: 16px;
   display:flex;
@@ -686,23 +638,21 @@ body{
   font-weight: 800;
 }
 
-/* Responsive */
 @media (max-width: 980px){
   .gg-features-title{ font-size: 40px; }
   .gg-features-grid{ grid-template-columns: 1fr; }
 }
 
 /* =========================
-   GOALS (base)
+   GOALS
    ========================= */
 .gg-goals{
-  padding: 40px 0 10px;
+  width: 100%;
 }
 
 .gg-goals-head{
   max-width: 1100px;
   margin: 0 auto 20px;
-  padding: 0 16px;
 }
 
 .gg-goals-title{
@@ -713,7 +663,6 @@ body{
 }
 .gg-goals-title .gg-dim{
   color: rgba(228,238,240,0.60);
-  font-weight: 900;
 }
 
 .gg-goals-sub{
@@ -725,8 +674,7 @@ body{
 }
 
 .gg-goals-shell{
-  max-width: 1220px;
-  margin: 24px auto 0;
+  margin-top: 24px;
   padding: 22px;
   border-radius: 22px;
   border: 1px solid rgba(255,255,255,0.06);
@@ -737,12 +685,23 @@ body{
   gap: 18px;
 }
 
-/* shared rail/panel base */
+.gg-goals-shell-v2{
+  border-radius: 26px;
+  background: rgba(10,14,20,0.34);
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 30px 90px rgba(0,0,0,0.45);
+}
+
 .gg-rail{
   border-radius: 18px;
   border: 1px solid rgba(255,255,255,0.06);
   background: rgba(0,0,0,0.22);
   padding: 14px;
+}
+
+.gg-rail-v2{
+  background: rgba(0,0,0,0.26);
+  border: 1px solid rgba(255,255,255,0.08);
 }
 
 .gg-rail-label{
@@ -806,12 +765,40 @@ body{
   flex: 0 0 auto;
 }
 
+.gg-rail-item-v2{
+  padding: 16px 16px;
+  border-radius: 18px;
+}
+
+.gg-rail-add{
+  width: 100%;
+  margin-top: 6px;
+  padding: 14px 14px;
+  border-radius: 18px;
+  border: 1px dashed rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.02);
+  color: rgba(228,238,240,0.75);
+  font-weight: 850;
+  cursor: pointer;
+  transition: 200ms ease;
+}
+.gg-rail-add:hover{
+  border-color: rgba(255,91,4,0.35);
+  color: var(--sand);
+  background: rgba(255,91,4,0.06);
+}
+
 .gg-panel{
   border-radius: 18px;
   border: 1px solid rgba(255,255,255,0.06);
   background: rgba(0,0,0,0.18);
   padding: 18px;
   min-height: 420px;
+}
+
+.gg-panel-v2{
+  background: rgba(0,0,0,0.20);
+  border: 1px solid rgba(255,255,255,0.08);
 }
 
 .gg-panel-top{
@@ -848,52 +835,6 @@ body{
   color: rgba(228,238,240,0.85);
 }
 
-/* V2 additions */
-.gg-goals-shell-v2{
-  border-radius: 26px;
-  background: rgba(10,14,20,0.34);
-  border: 1px solid rgba(255,255,255,0.08);
-  box-shadow: 0 30px 90px rgba(0,0,0,0.45);
-}
-
-.gg-rail-v2{
-  background: rgba(0,0,0,0.26);
-  border: 1px solid rgba(255,255,255,0.08);
-}
-
-.gg-rail-item-v2{
-  padding: 16px 16px;
-  border-radius: 18px;
-}
-
-.gg-rail-item-v2.is-active{
-  box-shadow: 0 12px 40px rgba(255,91,4,0.10);
-}
-
-.gg-rail-add{
-  width: 100%;
-  margin-top: 6px;
-  padding: 14px 14px;
-  border-radius: 18px;
-  border: 1px dashed rgba(255,255,255,0.18);
-  background: rgba(255,255,255,0.02);
-  color: rgba(228,238,240,0.75);
-  font-weight: 850;
-  cursor: pointer;
-  transition: 200ms ease;
-}
-.gg-rail-add:hover{
-  border-color: rgba(255,91,4,0.35);
-  color: var(--sand);
-  background: rgba(255,91,4,0.06);
-}
-
-.gg-panel-v2{
-  background: rgba(0,0,0,0.20);
-  border: 1px solid rgba(255,255,255,0.08);
-}
-
-/* common goals tiles */
 .gg-common-grid{
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -908,7 +849,6 @@ body{
   border-radius: 18px;
   background: rgba(255,255,255,0.03);
   border: 1px solid rgba(255,255,255,0.10);
-  cursor: default;
   transition: 220ms ease;
 }
 
@@ -934,7 +874,6 @@ body{
   color: rgba(228,238,240,0.82);
 }
 
-/* Goals responsive */
 @media (max-width: 1060px){
   .gg-goals-shell{ grid-template-columns: 1fr; }
   .gg-common-grid{ grid-template-columns: 1fr; }
@@ -945,7 +884,6 @@ body{
    FINAL CTA
    ========================= */
 .gg-final{
-  padding: 120px 16px 120px;
   text-align: center;
 }
 
@@ -977,6 +915,7 @@ body{
   font-size:17px;
   box-shadow:0 16px 50px rgba(255,91,4,0.35);
   transition: 0.25s ease;
+  margin-top: 18px;
 }
 
 .gg-final-btn:hover{
@@ -995,38 +934,4 @@ body{
   font-size: 13px;
   font-weight: 700;
   color: rgba(228,238,240,0.55);
-}
-
-.gg-nav-actions button{
-  appearance:none;
-  cursor:pointer;
-  font-weight:700;
-  font-size:14px;
-  line-height:1;
-  padding:10px 16px;
-  border-radius:12px;
-  transition: transform .08s ease, background .2s ease, border-color .2s ease, color .2s ease;
-}
-
-.gg-nav-actions button:active{ transform: translateY(1px); }
-
-.gg-nav-actions button:first-child{
-  background: transparent;
-  color: rgba(255,255,255,0.9);
-  border: 1px solid rgba(255,255,255,0.25);
-}
-
-.gg-nav-actions button:first-child:hover{
-  background: rgba(255,255,255,0.06);
-  border-color: rgba(255,255,255,0.35);
-}
-
-.gg-nav-actions button:last-child{
-  background: #19c37d;
-  color: #071216;
-  border: 1px solid rgba(25,195,125,0.55);
-}
-
-.gg-nav-actions button:last-child:hover{
-  filter: brightness(1.05);
 }
