@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>GoalGuard</title>
-
-  <!-- Bootstrap (optional, you can remove it if you want) -->
+  <link rel="icon" href="./favicon.png" type="image/png">
+  <!-- Bootstrap (optional) -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
 
   <!-- CSS in same folder (docs/) -->
@@ -25,10 +25,10 @@
       </div>
 
       <div class="gg-nav-actions">
-        <button type="button" class="gg-btn gg-btn-ghost" onclick="window.location.href='./signin.html'">
+        <button type="button" class="gg-btn gg-btn-ghost" id="navSignInBtn">
           Sign In
         </button>
-        <button type="button" class="gg-btn gg-btn-solid" onclick="window.location.href='./signup.html'">
+        <button type="button" class="gg-btn gg-btn-solid" id="navSignUpBtn">
           Sign Up
         </button>
       </div>
@@ -186,8 +186,8 @@
     </section>
 
     <!-- GOALS -->
-<section id="goals" class="gg-goals gg-snap-section">
-        <div class="gg-container gg-goals">
+    <section id="goals" class="gg-goals gg-snap-section">
+      <div class="gg-container gg-goals">
         <div class="gg-goals-head gg-reveal">
           <h2 class="gg-goals-title">Goals <span class="gg-dim">Explorer</span></h2>
           <p class="gg-goals-sub">
@@ -251,7 +251,7 @@
       </div>
     </section>
 
-    <!-- FINAL CTA (matches your screenshot) -->
+    <!-- FINAL CTA -->
     <section id="start" class="gg-snap-section">
       <div class="gg-container gg-final">
         <h2 class="gg-final-title">Ready to start saving smarter?</h2>
@@ -260,7 +260,7 @@
           Get a finance coach that protects your goals and improves your decisions — in minutes.
         </p>
 
-        <a class="gg-final-btn" href="#top">
+        <a class="gg-final-btn" id="startSavingBtn" href="#">
           Start saving for free <span class="gg-final-arrow">→</span>
         </a>
 
@@ -270,6 +270,7 @@
 
   </main>
 
+  <!-- Reveal animation -->
   <script>
     (function(){
       const els = document.querySelectorAll('.gg-reveal');
@@ -288,6 +289,65 @@
 
       els.forEach(el => io.observe(el));
     })();
+  </script>
+
+  <!-- ✅ Auth-aware routing for buttons/CTA -->
+  <script type="module">
+    import { supabase } from "./supabaseClient.js";
+
+    function hasCompletedSetup(userId){
+      try{
+        const raw = localStorage.getItem(`goalguard_profile_${userId}`);
+        if (!raw) return false;
+        const profile = JSON.parse(raw);
+        if (profile?.setupComplete === true) return true;
+
+        const hasBasics =
+          profile &&
+          typeof profile.currencyCode === "string" &&
+          Number.isFinite(Number(profile.incomeMonthly)) &&
+          Number.isFinite(Number(profile.expensesMonthly));
+
+        return !!hasBasics;
+      } catch {
+        return false;
+      }
+    }
+
+    function routeAfterAuth(session){
+      const user = session?.user;
+      if (!user?.id) {
+        window.location.href = "./signin.html";
+        return;
+      }
+      if (hasCompletedSetup(user.id)) {
+        window.location.href = "./dashboard.html";
+      } else {
+        window.location.href = "./setup.html";
+      }
+    }
+
+    // Buttons
+    const navSignInBtn = document.getElementById("navSignInBtn");
+    const navSignUpBtn = document.getElementById("navSignUpBtn");
+    const startSavingBtn = document.getElementById("startSavingBtn");
+
+    navSignInBtn.addEventListener("click", async () => {
+      const { data } = await supabase.auth.getSession();
+      if (data?.session) routeAfterAuth(data.session);
+      else window.location.href = "./signin.html";
+    });
+
+    navSignUpBtn.addEventListener("click", () => {
+      window.location.href = "./signup.html";
+    });
+
+    startSavingBtn.addEventListener("click", async (e) => {
+      e.preventDefault();
+      const { data } = await supabase.auth.getSession();
+      if (data?.session) routeAfterAuth(data.session);
+      else window.location.href = "./signup.html";
+    });
   </script>
 </body>
 </html>

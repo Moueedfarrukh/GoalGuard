@@ -1,0 +1,512 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GoalGuard — Setup</title>
+
+  <style>
+    :root{
+      --bg0:#071216;
+      --bg1:#0a1f26;
+      --panel: rgba(10, 18, 22, 0.78);
+      --stroke: rgba(255,255,255,0.10);
+      --stroke2: rgba(255,255,255,0.14);
+      --text: rgba(255,255,255,0.95);
+      --muted: rgba(255,255,255,0.62);
+      --accent: #19c37d;
+      --cta: #ff6a00;
+      --cta2:#ff7f2a;
+      --shadow: 0 20px 60px rgba(0,0,0,0.55);
+      --radius: 18px;
+    }
+
+    *{box-sizing:border-box;}
+    html,body{height:100%;}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      color: var(--text);
+      background:
+        radial-gradient(1200px 700px at 50% 16%, rgba(25,195,125,0.10), transparent 55%),
+        radial-gradient(1100px 650px at 52% 28%, rgba(255,106,0,0.10), transparent 60%),
+        linear-gradient(180deg, var(--bg1), var(--bg0));
+    }
+
+    .wrap{
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 18px;
+    }
+
+    .panel{
+      background: var(--panel);
+      border: 1px solid var(--stroke);
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+      overflow:hidden;
+    }
+
+    .head{
+      padding: 18px 18px 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .title{
+      margin:0;
+      font-size: 40px;
+      font-weight: 950;
+    }
+    .sub{
+      margin: 8px 0 0;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .body{
+      padding: 18px;
+      display:grid;
+      gap: 14px;
+    }
+
+    .grid2{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    @media (max-width: 860px){
+      .grid2{ grid-template-columns: 1fr; }
+    }
+
+    .field{ display:flex; flex-direction:column; gap:8px; }
+    .label{
+      font-size: 12px;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.70);
+      font-weight: 900;
+    }
+    .input, .select{
+      width:100%;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.03);
+      color: var(--text);
+      border-radius: 14px;
+      padding: 12px 12px;
+      outline:none;
+    }
+
+    .hint{
+      color: rgba(255,255,255,0.65);
+      font-size: 13px;
+      line-height: 1.45;
+      margin: 0;
+    }
+
+    .divider{
+      height:1px;
+      background: rgba(255,255,255,0.08);
+      margin: 8px 0;
+    }
+
+    /* goals rows */
+    .goalsTop{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 10px;
+    }
+
+    .btn{
+      border: 1px solid var(--stroke2);
+      background: rgba(255,255,255,0.06);
+      color: var(--text);
+      border-radius: 12px;
+      padding: 10px 12px;
+      cursor:pointer;
+      font-weight:900;
+      white-space: nowrap;
+    }
+    .btn:hover{ background: rgba(255,255,255,0.08); }
+
+    .btn.primary{
+      border:0;
+      color:#111;
+      background: linear-gradient(135deg, var(--cta), var(--cta2));
+      box-shadow: 0 16px 36px rgba(255,106,0,0.16);
+      padding: 14px 18px;
+      border-radius: 16px;
+      font-size: 16px;
+    }
+
+    .goalRow{
+      display:grid;
+      grid-template-columns: 1.4fr 0.7fr 0.9fr 0.6fr 0.7fr auto;
+      gap: 10px;
+      align-items:center;
+    }
+    @media (max-width: 980px){
+      .goalRow{ grid-template-columns: 1fr 1fr; }
+    }
+
+    .dangerBtn{
+      border: 1px solid rgba(255,80,80,0.25);
+      background: rgba(255,80,80,0.10);
+      color: rgba(255,255,255,0.90);
+      border-radius: 12px;
+      padding: 10px 12px;
+      cursor:pointer;
+      font-weight: 950;
+    }
+
+    .card{
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.03);
+      border-radius: 16px;
+      padding: 12px;
+    }
+
+    .footer{
+      display:flex;
+      justify-content:flex-end;
+      padding: 0 18px 18px;
+    }
+
+    .qcTitle{ margin:0 0 6px 0; font-weight: 950; }
+    .qcText{ margin:0; color: rgba(255,255,255,0.74); line-height:1.5; white-space: pre-wrap; }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="panel">
+      <div class="head">
+        <h1 class="title">Set up your GoalGuard</h1>
+        <p class="sub">Pick currency, budget, goals, and agent style.</p>
+      </div>
+
+      <div class="body">
+        <div class="grid2">
+          <div class="field">
+            <div class="label">Currency</div>
+            <select class="select" id="currency">
+              <option value="AED" selected>AED — UAE Dirham</option>
+              <option value="USD">USD — US Dollar</option>
+              <option value="EUR">EUR — Euro</option>
+              <option value="GBP">GBP — British Pound</option>
+              <option value="SAR">SAR — Saudi Riyal</option>
+              <option value="QAR">QAR — Qatari Riyal</option>
+              <option value="KWD">KWD — Kuwaiti Dinar</option>
+              <option value="OMR">OMR — Omani Rial</option>
+              <option value="INR">INR — Indian Rupee</option>
+              <option value="PKR">PKR — Pakistani Rupee</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <div class="label">Agent style</div>
+            <select class="select" id="agentStyle">
+              <option value="Friendly">Friendly</option>
+              <option value="Coach" selected>Coach</option>
+              <option value="Strict">Strict</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid2">
+          <div class="field">
+            <div class="label">Monthly income</div>
+            <input class="input" id="income" type="number" inputmode="decimal" placeholder="e.g. 15000" />
+          </div>
+          <div class="field">
+            <div class="label">Monthly expenses</div>
+            <input class="input" id="expenses" type="number" inputmode="decimal" placeholder="e.g. 8000" />
+          </div>
+        </div>
+
+        <div class="grid2">
+          <div class="field">
+            <div class="label">Starting balance (optional)</div>
+            <input class="input" id="startingBalance" type="number" inputmode="decimal" placeholder="e.g. 50000" />
+            <p class="hint">Used to calculate “saved since start” on your dashboard.</p>
+          </div>
+          <div class="field">
+            <div class="label">WhatsApp number (later we’ll connect)</div>
+            <input class="input" id="whatsapp" placeholder="+9715xxxxxxxx" />
+            <p class="hint">We’ll do the free WhatsApp setup later (using a local bridge).</p>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="goalsTop">
+          <div>
+            <div class="label" style="margin-bottom:6px;">Your goals</div>
+            <p class="hint" style="margin:0;">Add at least 1 goal. Blank rows are ignored.</p>
+          </div>
+          <button class="btn" id="addGoalRowBtn" type="button">+ Add goal</button>
+        </div>
+
+        <div id="goalsContainer" style="display:grid; gap:10px;"></div>
+
+        <div class="card">
+          <p class="qcTitle">Quick reality check</p>
+          <p class="qcText" id="quickCheck">—</p>
+        </div>
+      </div>
+
+      <div class="footer">
+        <button class="btn primary" id="finishBtn" type="button">Finish setup</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { supabase } from "./supabaseClient.js";
+
+    // 1) Require session
+    const { data, error } = await supabase.auth.getSession();
+    const session = data?.session;
+
+    if (!session) {
+      window.location.href = "./signin.html";
+      throw new Error("No session. Redirecting to signin.");
+    }
+
+    // 2) Keys used by dashboard
+    const uid = session.user.id;
+    const PROFILE_KEY = `goalguard_profile_${uid}`;
+    const GOALS_KEY   = `goalguard_goals_${uid}`;
+    const BAL_KEY     = `goalguard_balance_${uid}`;
+
+    // 3) Helpers
+    function safeUUID(){
+      try { return crypto.randomUUID(); }
+      catch { return `id_${Date.now()}_${Math.random().toString(16).slice(2)}`; }
+    }
+    function n(v){
+      const x = Number(v);
+      return Number.isFinite(x) ? x : 0;
+    }
+    function formatMoney(val, currency){
+      const num = Number(val);
+      if (!Number.isFinite(num)) return "—";
+      try {
+        return new Intl.NumberFormat(undefined, { style:"currency", currency, maximumFractionDigits:0 }).format(num);
+      } catch {
+        return `${num.toLocaleString()} ${currency}`;
+      }
+    }
+
+    function loadProfile(){
+      const raw = localStorage.getItem(PROFILE_KEY);
+      if (!raw) return null;
+      try { return JSON.parse(raw); } catch { return null; }
+    }
+    function loadGoals(){
+      const raw = localStorage.getItem(GOALS_KEY);
+      if (!raw) return [];
+      try { return JSON.parse(raw) || []; } catch { return []; }
+    }
+
+    // ✅ OPTIONAL: If setup already done, skip this page
+    const existingProfile = loadProfile();
+    const existingGoals = loadGoals();
+    const hasSetup = !!(existingProfile && existingProfile.setupCompletedAt && existingGoals.length > 0);
+
+    // If user already has setup, go to dashboard
+    if (hasSetup) {
+      window.location.href = "./dashboard.html";
+    }
+
+    // 4) Goal rows UI
+    const goalsContainer = document.getElementById("goalsContainer");
+    const quickCheckEl = document.getElementById("quickCheck");
+
+    function makeGoalRow(prefill = {}){
+      const row = document.createElement("div");
+      row.className = "goalRow";
+      row.dataset.goalRow = "1";
+
+      // NOTE: keep exactly your fields/design
+      row.innerHTML = `
+        <input class="input" data-name placeholder="Goal name (e.g. Laptop)" value="${prefill.name ?? ""}">
+        <input class="input" data-target type="number" inputmode="decimal" placeholder="Target" value="${prefill.target ?? ""}">
+        <input class="input" data-due type="date" value="${prefill.dueDate ?? ""}">
+        <input class="input" data-weekly type="number" inputmode="decimal" placeholder="Weekly" value="${prefill.weekly ?? ""}">
+        <select class="select" data-type>
+          <option value="Primary" ${prefill.type === "Primary" ? "selected": ""}>Primary</option>
+          <option value="Secondary" ${(!prefill.type || prefill.type === "Secondary") ? "selected": ""}>Secondary</option>
+        </select>
+        <button class="dangerBtn" data-remove type="button">Remove</button>
+      `;
+
+      row.querySelector("[data-remove]").addEventListener("click", () => {
+        row.remove();
+        updateQuickCheck();
+      });
+
+      // live quick check updates
+      row.querySelectorAll("input,select").forEach(el => {
+        el.addEventListener("input", updateQuickCheck);
+        el.addEventListener("change", updateQuickCheck);
+      });
+
+      return row;
+    }
+
+    document.getElementById("addGoalRowBtn").addEventListener("click", () => {
+      goalsContainer.appendChild(makeGoalRow());
+      updateQuickCheck();
+    });
+
+    // 5) Prefill if user returns to setup
+    function prefillFromStorage(){
+      const p = loadProfile();
+      const goals = loadGoals();
+
+      if (p) {
+        if (p.currencyCode) document.getElementById("currency").value = p.currencyCode;
+        if (p.agentStyle) document.getElementById("agentStyle").value = p.agentStyle;
+        if (Number.isFinite(Number(p.incomeMonthly))) document.getElementById("income").value = p.incomeMonthly;
+        if (Number.isFinite(Number(p.expensesMonthly))) document.getElementById("expenses").value = p.expensesMonthly;
+        if (Number.isFinite(Number(p.startingBalance))) document.getElementById("startingBalance").value = p.startingBalance;
+        if (p.whatsapp) document.getElementById("whatsapp").value = p.whatsapp;
+      }
+
+      goalsContainer.innerHTML = "";
+      if (goals && goals.length > 0) {
+        goals.forEach(g => goalsContainer.appendChild(makeGoalRow(g)));
+      } else {
+        goalsContainer.appendChild(makeGoalRow()); // start with one row
+      }
+    }
+
+    prefillFromStorage();
+
+    // 6) Quick check (based on PRIMARY goal if present)
+    function readValidGoals(){
+      const rows = [...goalsContainer.querySelectorAll("[data-goal-row]")];
+
+      const goals = rows.map(r => {
+        const name = (r.querySelector("[data-name]")?.value || "").trim();
+        const target = n(r.querySelector("[data-target]")?.value);
+        const dueDate = (r.querySelector("[data-due]")?.value || "").trim();
+        const weekly = n(r.querySelector("[data-weekly]")?.value);
+        const type = (r.querySelector("[data-type]")?.value || "Secondary");
+        return { name, target, dueDate, weekly, type };
+      });
+
+      // IMPORTANT: ignore blank rows
+      return goals.filter(g => g.name && g.target > 0 && g.dueDate);
+    }
+
+    function monthsBetween(now, due){
+      const ms = due.getTime() - now.getTime();
+      const days = ms / (1000*60*60*24);
+      return Math.max(1, Math.ceil(days / 30));
+    }
+
+    function updateQuickCheck(){
+      const currency = document.getElementById("currency").value;
+      const income = n(document.getElementById("income").value);
+      const expenses = n(document.getElementById("expenses").value);
+      const surplus = income - expenses;
+
+      const goals = readValidGoals();
+      if (goals.length === 0) {
+        quickCheckEl.textContent = "Add at least one complete goal (name + target + date) to see a reality check.";
+        return;
+      }
+
+      const primary = goals.find(g => g.type === "Primary") || goals[0];
+      const due = new Date(primary.dueDate);
+      const months = monthsBetween(new Date(), due);
+      const needPerMonth = primary.target / months;
+
+      if (surplus <= 0) {
+        quickCheckEl.textContent =
+          `Based on your goal "${primary.name}": you need about ${formatMoney(needPerMonth, currency)}/month.\n` +
+          `But your surplus is ${formatMoney(surplus, currency)}/month — you’ll need to reduce expenses or increase income.`;
+        return;
+      }
+
+      if (surplus >= needPerMonth) {
+        quickCheckEl.textContent =
+          `Based on your primary goal "${primary.name}": you need about ${formatMoney(needPerMonth, currency)}/month.\n` +
+          `Your surplus is ${formatMoney(surplus, currency)}/month, so this goal is possible by the deadline if you stay consistent.`;
+      } else {
+        const extraMonths = Math.ceil(primary.target / Math.max(1, surplus));
+        quickCheckEl.textContent =
+          `Based on your primary goal "${primary.name}": you need about ${formatMoney(needPerMonth, currency)}/month.\n` +
+          `Your surplus is ${formatMoney(surplus, currency)}/month, so the deadline is tight.\n` +
+          `At this surplus, you’d likely need ~${extraMonths} months total (later than the selected deadline).`;
+      }
+    }
+
+    ["currency","agentStyle","income","expenses"].forEach(id => {
+      document.getElementById(id).addEventListener("input", updateQuickCheck);
+      document.getElementById(id).addEventListener("change", updateQuickCheck);
+    });
+
+    updateQuickCheck();
+
+    // 7) Finish setup (SAVE)
+    document.getElementById("finishBtn").addEventListener("click", () => {
+      try {
+        const currencyCode = document.getElementById("currency").value;
+        const agentStyle = document.getElementById("agentStyle").value;
+        const incomeMonthly = n(document.getElementById("income").value);
+        const expensesMonthly = n(document.getElementById("expenses").value);
+        const whatsapp = (document.getElementById("whatsapp").value || "").trim();
+
+        if (incomeMonthly <= 0) return alert("Please enter your monthly income.");
+        if (expensesMonthly < 0) return alert("Please enter valid monthly expenses.");
+
+        const goals = readValidGoals().map(g => ({
+          id: safeUUID(),
+          name: g.name,
+          target: g.target,
+          dueDate: g.dueDate,
+          weekly: g.weekly || 0,
+          type: g.type || "Secondary"
+        }));
+
+        if (goals.length === 0) {
+          alert("Please add at least 1 complete goal (name + target + date).");
+          return;
+        }
+
+        const startingBalance = n(document.getElementById("startingBalance").value);
+
+        // Save profile for dashboard
+        const profile = {
+          currencyCode,
+          agentStyle,
+          incomeMonthly,
+          expensesMonthly,
+          whatsapp,
+          startingBalance,            // ✅ IMPORTANT: dashboard expects this
+          setupCompletedAt: new Date().toISOString()
+        };
+
+        localStorage.setItem(PROFILE_KEY, JSON.stringify(profile));
+        localStorage.setItem(GOALS_KEY, JSON.stringify(goals));
+
+        // ✅ Initialize balance
+        // Only set balance if not already set (so we don’t overwrite later user updates)
+        const existingBal = localStorage.getItem(BAL_KEY);
+        if (!existingBal) {
+          localStorage.setItem(BAL_KEY, String(startingBalance > 0 ? startingBalance : 0));
+        }
+
+        // Go to dashboard
+        window.location.href = "./dashboard.html";
+      } catch (err) {
+        console.error("SETUP SAVE FAILED:", err);
+        alert("Failed to save setup. Check console.");
+      }
+    });
+  </script>
+</body>
+</html>

@@ -4,6 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>GoalGuard — Sign In</title>
+
   <style>
     :root{
       --bg0: #071216;
@@ -12,13 +13,12 @@
       --stroke: rgba(255,255,255,0.10);
       --muted: rgba(255,255,255,0.65);
       --text: rgba(255,255,255,0.95);
-      --accent: #19c37d;      /* GoalGuard green */
-      --cta: #ff6a00;         /* GoalGuard orange */
+      --accent: #19c37d;
+      --cta: #ff6a00;
       --cta2:#ff7f2a;
       --shadow: 0 20px 60px rgba(0,0,0,0.55);
       --radius: 22px;
 
-      /* IMPORTANT: fixed card size (same width + height) */
       --cardW: 420px;
       --cardH: 760px;
     }
@@ -52,13 +52,12 @@
       backdrop-filter: blur(14px);
     }
 
-    /* soft glow */
     .shell::before{
       content:"";
       position:absolute;
       inset:-120px -120px auto -120px;
       height: 280px;
-      background: radial-gradient(circle at 50% 40%, rgba(25,195,125,0.18), transparent 65%);
+      background: radial-gradient(circle at 50% 40%, rgba(255,106,0,0.16), transparent 65%);
       pointer-events:none;
     }
 
@@ -86,14 +85,11 @@
       color:#061116;
       letter-spacing:0;
     }
-    .brandName{
-      font-size: 18px;
-      opacity:0.95;
-    }
+    .brandName{ font-size:18px; opacity:0.95; }
 
     h1{
       margin: 0 0 6px 0;
-      font-size: 34px;
+      font-size: 44px;
       line-height: 1.1;
       text-align:center;
       position:relative;
@@ -152,18 +148,13 @@
       background: rgba(255,255,255,0.10);
     }
 
-    .field{
-      margin-top: 14px;
-      position:relative;
-      z-index:1;
-    }
+    .field{ margin-top: 14px; position:relative; z-index:1; }
     .label{
       display:block;
       margin: 0 0 8px 2px;
       font-size: 13px;
       color: rgba(255,255,255,0.75);
     }
-
     .inputWrap{
       display:flex;
       align-items:center;
@@ -179,6 +170,7 @@
       display:grid;
       place-items:center;
       opacity:0.75;
+      flex:0 0 auto;
     }
     input{
       width:100%;
@@ -191,17 +183,14 @@
     input::placeholder{ color: rgba(255,255,255,0.35); }
 
     .eye{
-      width:34px;
-      height:28px;
-      border-radius: 10px;
-      border: 1px solid rgba(255,255,255,0.12);
-      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.05);
+      color: var(--text);
+      border-radius: 12px;
+      padding: 8px 10px;
       cursor:pointer;
-      display:grid;
-      place-items:center;
-      opacity:0.8;
+      flex:0 0 auto;
     }
-    .eye:hover{ opacity:1; }
 
     .primary{
       margin-top: 20px;
@@ -232,8 +221,10 @@
     }
     .link:hover{ text-decoration: underline; }
 
-    /* keep overall card layout stable */
-    .spacer{ height: 8px; }
+    .disabled{
+      opacity: .65;
+      pointer-events: none;
+    }
   </style>
 </head>
 
@@ -247,44 +238,123 @@
     <h1>Welcome back</h1>
     <p class="sub">Sign in to continue building smarter savings habits.</p>
 
-    <button class="btn" type="button" aria-label="Continue with Google">
+    <button class="btn" id="googleSigninBtn" type="button">
       <span class="googleG" aria-hidden="true"></span>
       Continue with Google
     </button>
 
     <div class="divider">or continue with email</div>
 
-    <div class="field">
-      <label class="label" for="email">Email</label>
-      <div class="inputWrap">
-        <div class="iconBox" aria-hidden="true">✉️</div>
-        <input id="email" type="email" placeholder="you@example.com" autocomplete="email" />
+    <form id="loginForm">
+      <div class="field">
+        <label class="label" for="email">Email</label>
+        <div class="inputWrap">
+          <div class="iconBox" aria-hidden="true">✉️</div>
+          <input id="email" type="email" placeholder="you@example.com" autocomplete="email" required />
+        </div>
       </div>
-    </div>
 
-    <div class="field">
-      <label class="label" for="password">Password</label>
-      <div class="inputWrap">
-        <div class="iconBox" aria-hidden="true">🔒</div>
-        <input id="password" type="password" placeholder="Enter your password" autocomplete="current-password" />
-        <button class="eye" type="button" aria-label="Show/hide password" onclick="togglePassword()">
-          👁️
-        </button>
+      <div class="field">
+        <label class="label" for="password">Password</label>
+        <div class="inputWrap">
+          <div class="iconBox" aria-hidden="true">🔒</div>
+          <input id="password" type="password" placeholder="Enter your password" autocomplete="current-password" required />
+          <button class="eye" id="togglePwBtn" type="button" aria-label="Toggle password visibility">👁️</button>
+        </div>
       </div>
-    </div>
 
-    <button class="btn primary" type="button">Sign In</button>
+      <button class="btn primary" id="signinBtn" type="submit">Sign In</button>
+    </form>
 
     <div class="bottom">
-      Don’t have an account? <a class="link" href="signup.html">Sign up</a>
+      Don’t have an account? <a class="link" href="./signup.html">Sign up</a>
     </div>
   </main>
 
-  <script>
-    function togglePassword(){
-      const el = document.getElementById('password');
-      el.type = (el.type === 'password') ? 'text' : 'password';
+  <script type="module">
+    import { supabase } from "./supabaseClient.js";
+
+    // ---------------------------
+    // ROUTING LOGIC (NEW vs OLD)
+    // ---------------------------
+    function hasCompletedSetup(userId){
+      try{
+        const raw = localStorage.getItem(`goalguard_profile_${userId}`);
+        if (!raw) return false;
+        const profile = JSON.parse(raw);
+
+        // If you store a flag in setup.html, we respect it.
+        // If not, we still treat profile as "setup done" when it has the key fields.
+        if (profile?.setupComplete === true) return true;
+
+        const hasBasics =
+          profile &&
+          typeof profile.currencyCode === "string" &&
+          Number.isFinite(Number(profile.incomeMonthly)) &&
+          Number.isFinite(Number(profile.expensesMonthly));
+
+        return !!hasBasics;
+      } catch {
+        return false;
+      }
     }
+
+    function routeAfterAuth(session){
+      const user = session?.user;
+      if (!user?.id) {
+        window.location.href = "./signin.html";
+        return;
+      }
+
+      if (hasCompletedSetup(user.id)) {
+        window.location.href = "./dashboard.html";
+      } else {
+        window.location.href = "./setup.html";
+      }
+    }
+
+    // If already logged in, route properly (NOT always to dashboard)
+    const { data: sessionData } = await supabase.auth.getSession();
+    if (sessionData?.session) {
+      routeAfterAuth(sessionData.session);
+    }
+
+    // Google sign in placeholder
+    document.getElementById("googleSigninBtn").addEventListener("click", () => {
+      alert("Google sign-in not added yet. Use email sign-in for now.");
+    });
+
+    // Toggle password
+    const pwInput = document.getElementById("password");
+    document.getElementById("togglePwBtn").addEventListener("click", () => {
+      pwInput.type = (pwInput.type === "password") ? "text" : "password";
+    });
+
+    const form = document.getElementById("loginForm");
+    const signinBtn = document.getElementById("signinBtn");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      signinBtn.textContent = "Signing in...";
+      signinBtn.classList.add("disabled");
+
+      const email = document.getElementById("email").value.replace(/\s+/g, "").toLowerCase();
+      const password = pwInput.value;
+
+      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+
+      signinBtn.textContent = "Sign In";
+      signinBtn.classList.remove("disabled");
+
+      if (error) {
+        alert(error.message);
+        return;
+      }
+
+      // ✅ Route based on setup completion
+      routeAfterAuth(data?.session);
+    });
   </script>
 </body>
 </html>
